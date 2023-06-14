@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "580159835275",
+    "project_id": "kaphia-bd-dev",
+    "storage_bucket": "kaphia-bd-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:580159835275:android:bf498081029152853cd88e",
+        "android_client_info": {
+          "package_name": "com.kaphiabd.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "580159835275-f9etsa1dnqrqsfnks8n8vf0a72g8gcb1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-vvsq4xrB49yrFuniEvP75Fl0hFkE3GU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "580159835275-f9etsa1dnqrqsfnks8n8vf0a72g8gcb1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
