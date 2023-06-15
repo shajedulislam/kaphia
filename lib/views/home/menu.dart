@@ -81,13 +81,16 @@ class Menu extends ConsumerWidget {
                             Padding(
                               padding:
                                   EdgeInsets.only(bottom: ProDesign.pt(16)),
-                              child: ProRadiusClip(
+                              child: ProCard(
+                                backgroundColor: ProjectColors.grey300,
+                                width: ProDesign.pt(150),
+                                height: ProDesign.pt(150),
                                 borderRadius: ProDesign.pt(8),
-                                child: ProShape(
-                                  color: ProjectColors.grey300,
-                                  width: ProDesign.pt(150),
-                                  height: ProDesign.pt(150),
-                                  radius: ProDesign.pt(8),
+                                padding: const EdgeInsets.all(0),
+                                borderColor: ProjectColors.grey300,
+                                borderWidth: ProDesign.pt(1),
+                                child: ProRadiusClip(
+                                  borderRadius: ProDesign.pt(8),
                                   child: CachedNetworkImage(
                                     height: ProDesign.pt(150),
                                     width: ProDesign.pt(150),

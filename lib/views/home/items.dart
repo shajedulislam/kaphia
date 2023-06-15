@@ -44,13 +44,16 @@ class MenuItems extends ConsumerWidget {
                               borderRadius: ProDesign.pt(8),
                               child: Row(
                                 children: [
-                                  ProRadiusClip(
+                                  ProCard(
+                                    backgroundColor: ProjectColors.grey300,
+                                    width: ProDesign.pt(120),
+                                    height: ProDesign.pt(120),
                                     borderRadius: ProDesign.pt(8),
-                                    child: ProShape(
-                                      color: ProjectColors.grey300,
-                                      width: ProDesign.pt(120),
-                                      height: ProDesign.pt(120),
-                                      radius: ProDesign.pt(8),
+                                    padding: const EdgeInsets.all(0),
+                                    borderColor: ProjectColors.grey300,
+                                    borderWidth: ProDesign.pt(1),
+                                    child: ProRadiusClip(
+                                      borderRadius: ProDesign.pt(8),
                                       child: CachedNetworkImage(
                                         height: ProDesign.pt(150),
                                         width: ProDesign.pt(150),
