@@ -9,6 +9,7 @@ class MenuItemsModel {
   MenuItemsModel.fromJson(Map<String, dynamic> json) {
     image = json['image'];
     name = json['name'];
+
     availability = json['availability'];
     if (json['items'] != null) {
       items = <Items>[];
@@ -17,40 +18,35 @@ class MenuItemsModel {
       });
     }
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['image'] = image;
-    data['name'] = name;
-    data['availability'] = availability;
-    if (items != null) {
-      data['items'] = items!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
 }
 
 class Items {
+  String? id;
   String? image;
   String? variationType;
   List<Sizes>? sizes;
-  Sides? sides;
+  List<String>? sides;
+  int? sideSelectionLimit;
   int? price;
   String? name;
   String? description;
   bool? availability;
 
   Items(
-      {this.image,
-      this.variationType,
-      this.sizes,
-      this.sides,
-      this.price,
-      this.name,
-      this.description,
-      this.availability});
+    this.id, {
+    this.image,
+    this.variationType,
+    this.sizes,
+    this.sides,
+    this.sideSelectionLimit,
+    this.price,
+    this.name,
+    this.description,
+    this.availability,
+  });
 
   Items.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     image = json['image'];
     variationType = json['variation_type'];
     if (json['sizes'] != null) {
@@ -59,7 +55,8 @@ class Items {
         sizes!.add(Sizes.fromJson(v));
       });
     }
-    sides = json['sides'] != null ? Sides.fromJson(json['sides']) : null;
+    sides = json['sides'] != null ? json['sides'].cast<String>() : [];
+    sideSelectionLimit = json['side_selection_limit'];
     price = json['price'];
     name = json['name'];
     description = json['description'];
@@ -74,7 +71,7 @@ class Items {
       data['sizes'] = sizes!.map((v) => v.toJson()).toList();
     }
     if (sides != null) {
-      data['sides'] = sides!.toJson();
+      data['sides'] = sides;
     }
     data['price'] = price;
     data['name'] = name;
@@ -99,25 +96,6 @@ class Sizes {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['price'] = price;
     data['name'] = name;
-    return data;
-  }
-}
-
-class Sides {
-  int? limit;
-  List<String>? items;
-
-  Sides({this.limit, this.items});
-
-  Sides.fromJson(Map<String, dynamic> json) {
-    limit = json['limit'];
-    items = json['items'].cast<String>();
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['limit'] = limit;
-    data['items'] = items;
     return data;
   }
 }

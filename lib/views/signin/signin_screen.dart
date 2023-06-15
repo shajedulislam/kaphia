@@ -9,9 +9,11 @@ import 'package:kaphia/utilities/functions/navigation.dart';
 import 'package:pro_design/pro_design.dart';
 import 'package:pro_widgets/pro_widgets.dart';
 
+import '../../utilities/constants/image_paths.dart';
 import '../../utilities/functions/email_validator.dart';
 import '../../utilities/functions/null_checker.dart';
 import '../home/home_screen.dart';
+import '../shared/widgets/gap.dart';
 import '../shared/widgets/loading_indicator.dart';
 
 class SigninScreen extends ConsumerStatefulWidget {
@@ -44,27 +46,31 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      ProText(
-                        text: "Kaphia",
-                        fontSize: ProDesign.sp(34),
-                        color: ProjectColors.secondary500,
+                      ProAssetImage(
+                        height: ProDesign.pt(250),
+                        width: ProDesign.pt(250),
+                        boxFit: BoxFit.cover,
+                        imagePath: ProjectImagePath.logo,
                       ),
-                      ProGap(y: ProDesign.pt(200)),
+                      const Gap(y: 150),
                       ProTextFormField(
+                        hint: "Email",
                         width: ProDesign.pt(350),
                         paddingVertical: ProDesign.pt(20),
                         fontSize: ProDesign.sp(18),
                         fontWeight: FontWeight.w600,
-                        hintFontWeight: FontWeight.w500,
-                        errorFontWeight: FontWeight.w400,
-                        hintFontSize: ProDesign.sp(18),
-                        errorFontSize: ProDesign.sp(16),
                         fontColor: ProjectColors.secondary500,
-                        hintColor: ProjectColors.secondary200,
-                        hint: "Email",
-                        borderRadius: ProDesign.pt(8),
-                        borderColor: ProjectColors.border,
+                        hintColor: ProjectColors.secondary300,
+                        hintFontSize: ProDesign.sp(18),
+                        hintFontWeight: FontWeight.w500,
+                        errorFontSize: ProDesign.sp(16),
+                        errorFontWeight: FontWeight.w400,
+                        errorFontColor: ProjectColors.red500,
+                        backgroundColor: ProjectColors.white,
+                        borderColorFocused: ProjectColors.primary,
+                        borderColor: ProjectColors.grey400,
                         keyboardType: TextInputType.emailAddress,
+                        borderRadius: ProDesign.pt(8),
                         onChanged: (value) {
                           email = value;
                         },
@@ -72,7 +78,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                           if (isNull(value)) {
                             return 'Please enter your email';
                           } else if (!isEmailValid(value)) {
-                            return 'PLease enter a valid email address';
+                            return 'Please enter a valid email address';
                           } else {
                             return null;
                           }
@@ -80,19 +86,22 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                       ),
                       ProGap(y: ProDesign.pt(16)),
                       ProTextFormField(
+                        hint: "Password",
                         width: ProDesign.pt(350),
                         paddingVertical: ProDesign.pt(20),
                         fontSize: ProDesign.sp(18),
-                        fontWeight: FontWeight.w600,
-                        hintFontWeight: FontWeight.w500,
-                        errorFontWeight: FontWeight.w400,
-                        hintFontSize: ProDesign.sp(18),
-                        errorFontSize: ProDesign.sp(16),
-                        fontColor: ProjectColors.secondary500,
-                        hintColor: ProjectColors.secondary200,
-                        hint: "Password",
                         borderRadius: ProDesign.pt(8),
-                        borderColor: ProjectColors.border,
+                        fontWeight: FontWeight.w600,
+                        fontColor: ProjectColors.secondary500,
+                        hintColor: ProjectColors.secondary300,
+                        hintFontSize: ProDesign.sp(18),
+                        hintFontWeight: FontWeight.w500,
+                        errorFontSize: ProDesign.sp(16),
+                        errorFontWeight: FontWeight.w400,
+                        errorFontColor: ProjectColors.red500,
+                        backgroundColor: ProjectColors.white,
+                        borderColorFocused: ProjectColors.primary,
+                        borderColor: ProjectColors.grey400,
                         obsecureText: true,
                         onChanged: (value) {
                           password = value;
@@ -108,7 +117,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                       ProGap(y: ProDesign.pt(16)),
                       ProButtonBasic(
                         width: ProDesign.pt(350),
-                        height: ProDesign.pt(56),
+                        height: ProDesign.pt(61),
                         borderRadius: ProDesign.pt(8),
                         fontSize: ProDesign.sp(16),
                         fontColor: ProjectColors.white,
