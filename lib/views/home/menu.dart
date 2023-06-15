@@ -21,11 +21,13 @@ class Menu extends ConsumerWidget {
     return menuStream.when(
       data: (menu) {
         if (menu != null && menu.docs.isNotEmpty) {
-          callBackFunction(() {
-            ref
-                .read(selectedMenuProvider.notifier)
-                .update((state) => menu.docs.first.id);
-          });
+          if (ref.read(selectedMenuProvider) == null) {
+            callBackFunction(() {
+              ref
+                  .read(selectedMenuProvider.notifier)
+                  .update((state) => menu.docs.first.id);
+            });
+          }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
