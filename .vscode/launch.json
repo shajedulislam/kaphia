@@ -13,7 +13,7 @@
             ]
         },
         {
-            "name": "DEV LIVE",
+            "name": "LIVE DEBUG",
             "request": "launch",
             "flutterMode": "debug",
             "type": "dart",

@@ -1,3 +1,3 @@
 class ProjectValues {
-  static const String currency = "BDT";
+  static const String currency = "TK";
 }

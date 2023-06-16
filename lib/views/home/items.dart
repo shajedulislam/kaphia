@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaphia/models/menu_items.dart';
+import 'package:kaphia/views/home/item_detail_sheet.dart';
 import 'package:pro_design/pro_design.dart';
 import 'package:pro_widgets/pro_widgets.dart';
 
@@ -9,6 +10,7 @@ import '../../providers/firebase.dart';
 import '../../utilities/colors.dart';
 import '../../utilities/constants/strings.dart';
 import '../../utilities/constants/values.dart';
+import '../../utilities/functions/navigation.dart';
 import '../shared/widgets/loading_indicator.dart';
 import '../shared/widgets/radius_clip.dart';
 
@@ -35,7 +37,28 @@ class MenuItems extends ConsumerWidget {
                           padding: EdgeInsets.only(bottom: ProDesign.pt(20)),
                           child: ProTapper(
                             padding: const EdgeInsets.all(0),
-                            onTap: () {},
+                            onTap: () {
+                              proBottomSheet(
+                                context: context,
+                                customAppBar: const SizedBox.shrink(),
+                                isScrollControlled: true,
+                                sheetHeight: ProDesign.vertically(100),
+                                sheetMargin: EdgeInsets.only(
+                                  top: ProDesign.vertically(8),
+                                ),
+                                sheetBackgroundColor: ProjectColors.white,
+                                onAppBarCloseIconTap: () {
+                                  pop();
+                                },
+                                customBorderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(ProDesign.pt(20)),
+                                  topRight: Radius.circular(ProDesign.pt(20)),
+                                  bottomLeft: Radius.zero,
+                                  bottomRight: Radius.zero,
+                                ),
+                                sheetBody: ItemDetail(item: item),
+                              );
+                            },
                             child: ProCard(
                               backgroundColor: ProjectColors.grey100,
                               width: double.infinity,
