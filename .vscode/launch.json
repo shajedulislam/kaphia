@@ -13,9 +13,31 @@
             ]
         },
         {
+            "name": "DEV PROFILE",
+            "request": "launch",
+            "flutterMode": "profile",
+            "type": "dart",
+            "program": "lib/flavors/dev.dart",
+            "args": [
+                "--flavor",
+                "dev"
+            ]
+        },
+        {
             "name": "LIVE DEBUG",
             "request": "launch",
             "flutterMode": "debug",
+            "type": "dart",
+            "program": "lib/flavors/live.dart",
+            "args": [
+                "--flavor",
+                "live"
+            ]
+        },
+        {
+            "name": "LIVE PROFILE",
+            "request": "launch",
+            "flutterMode": "profile",
             "type": "dart",
             "program": "lib/flavors/live.dart",
             "args": [
