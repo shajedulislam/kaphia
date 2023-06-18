@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaphia/providers/firebase.dart';
 import 'package:kaphia/providers/selected_menu.dart';
 import 'package:kaphia/utilities/functions/call_back.dart';
+import 'package:kaphia/views/home/items.dart';
 import 'package:kaphia/views/shared/widgets/loading_indicator.dart';
 import 'package:pro_design/pro_design.dart';
 import 'package:pro_widgets/pro_widgets.dart';
@@ -29,103 +30,109 @@ class Menu extends ConsumerWidget {
             });
           }
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: ProDesign.pt(30),
-                  horizontal: ProDesign.pt(20),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ProText(
-                      text: "Hello!",
-                      fontSize: ProDesign.sp(28),
-                      color: ProjectColors.secondary500,
-                      fontWeight: FontWeight.w600,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: ProDesign.pt(30),
+                      horizontal: ProDesign.pt(20),
                     ),
-                    ProGap(y: ProDesign.pt(8)),
-                    ProText(
-                      text: "What would you like to order?",
-                      fontSize: ProDesign.sp(18),
-                      color: ProjectColors.secondary500,
-                      fontWeight: FontWeight.w600,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ProText(
+                          text: "Hello!",
+                          fontSize: ProDesign.sp(28),
+                          color: ProjectColors.secondary500,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        ProGap(y: ProDesign.pt(8)),
+                        ProText(
+                          text: "What would you like to order?",
+                          fontSize: ProDesign.sp(18),
+                          color: ProjectColors.secondary500,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: ProDesign.pt(220),
-                child: ListView(
-                  padding: EdgeInsets.only(
-                    left: ProDesign.pt(20),
                   ),
-                  scrollDirection: Axis.horizontal,
-                  children: menu.docs.map((document) {
-                    Map<String, dynamic> data =
-                        document.data()! as Map<String, dynamic>;
-                    return Padding(
-                      padding: EdgeInsets.only(right: ProDesign.pt(20)),
-                      child: ProTapper(
-                        padding: const EdgeInsets.all(0),
-                        onTap: () {
-                          ref
-                              .read(selectedMenuProvider.notifier)
-                              .update((state) => document.id);
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsets.only(bottom: ProDesign.pt(16)),
-                              child: ProCard(
-                                backgroundColor: ProjectColors.grey300,
-                                width: ProDesign.pt(150),
-                                height: ProDesign.pt(150),
-                                borderRadius: ProDesign.pt(8),
-                                padding: const EdgeInsets.all(0),
-                                borderColor: ProjectColors.grey300,
-                                borderWidth: ProDesign.pt(1),
-                                child: ProRadiusClip(
-                                  borderRadius: ProDesign.pt(8),
-                                  child: CachedNetworkImage(
-                                    height: ProDesign.pt(150),
+                  SizedBox(
+                    height: ProDesign.pt(220),
+                    child: ListView(
+                      padding: EdgeInsets.only(
+                        left: ProDesign.pt(20),
+                      ),
+                      scrollDirection: Axis.horizontal,
+                      children: menu.docs.map((document) {
+                        Map<String, dynamic> data =
+                            document.data()! as Map<String, dynamic>;
+                        return Padding(
+                          padding: EdgeInsets.only(right: ProDesign.pt(20)),
+                          child: ProTapper(
+                            padding: const EdgeInsets.all(0),
+                            onTap: () {
+                              ref
+                                  .read(selectedMenuProvider.notifier)
+                                  .update((state) => document.id);
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding:
+                                      EdgeInsets.only(bottom: ProDesign.pt(16)),
+                                  child: ProCard(
+                                    backgroundColor: ProjectColors.grey300,
                                     width: ProDesign.pt(150),
-                                    fit: BoxFit.cover,
-                                    imageUrl: data['image'] ?? "",
-                                    placeholder: (context, url) =>
-                                        const NormalLoader(),
-                                    errorWidget: (context, url, error) => Icon(
-                                      Icons.restaurant_menu_rounded,
-                                      size: ProDesign.pt(50),
-                                      color: ProjectColors.secondary400,
+                                    height: ProDesign.pt(150),
+                                    borderRadius: ProDesign.pt(8),
+                                    padding: const EdgeInsets.all(0),
+                                    borderColor: ProjectColors.grey300,
+                                    borderWidth: ProDesign.pt(1),
+                                    child: ProRadiusClip(
+                                      borderRadius: ProDesign.pt(8),
+                                      child: CachedNetworkImage(
+                                        height: ProDesign.pt(150),
+                                        width: ProDesign.pt(150),
+                                        fit: BoxFit.cover,
+                                        imageUrl: data['image'] ?? "",
+                                        placeholder: (context, url) =>
+                                            const NormalLoader(),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(
+                                          Icons.restaurant_menu_rounded,
+                                          size: ProDesign.pt(50),
+                                          color: ProjectColors.secondary400,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                                SizedBox(
+                                  width: ProDesign.pt(150),
+                                  child: ProText(
+                                    text: data['name'] ?? "NA",
+                                    fontSize: ProDesign.sp(18),
+                                    color: ProjectColors.secondary500,
+                                    fontWeight: FontWeight.w600,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    alignment: TextAlign.center,
+                                  ),
+                                )
+                              ],
                             ),
-                            SizedBox(
-                              width: ProDesign.pt(150),
-                              child: ProText(
-                                text: data['name'] ?? "NA",
-                                fontSize: ProDesign.sp(18),
-                                color: ProjectColors.secondary500,
-                                fontWeight: FontWeight.w600,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                alignment: TextAlign.center,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
               ),
+              const Expanded(child: MenuItems()),
             ],
           );
         } else {
