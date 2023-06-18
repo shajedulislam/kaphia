@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaphia/providers/selected_menu.dart';
 
-final menuStreamProvider = StreamProvider<QuerySnapshot?>(
+final menuStreamProvider = StreamProvider.autoDispose<QuerySnapshot?>(
   (ref) {
     if (FirebaseAuth.instance.currentUser != null) {
       return FirebaseFirestore.instance.collection('menu').snapshots();
@@ -13,7 +13,7 @@ final menuStreamProvider = StreamProvider<QuerySnapshot?>(
   },
 );
 
-final menuItemsStreamProvider = StreamProvider<DocumentSnapshot?>(
+final menuItemsStreamProvider = StreamProvider.autoDispose<DocumentSnapshot?>(
   (ref) {
     if (FirebaseAuth.instance.currentUser != null) {
       return FirebaseFirestore.instance

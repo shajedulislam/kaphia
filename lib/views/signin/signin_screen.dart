@@ -28,6 +28,21 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
   late String email;
   late String password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  onTapLogin() async {
+    if (ref.read(loginButtonLoader) != true) {
+      if (_formKey.currentState!.validate()) {
+        ref.read(loginButtonLoader.notifier).update((state) => true);
+        bool loggedIn = await loginMidleWear(email: email, password: password);
+        ref.read(loginButtonLoader.notifier).update((state) => false);
+
+        if (loggedIn == true) {
+          pushAndRemoveAll(screen: const HomeScreen());
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -69,8 +84,10 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                         backgroundColor: ProjectColors.white,
                         borderColorFocused: ProjectColors.primary,
                         borderColor: ProjectColors.grey400,
-                        keyboardType: TextInputType.emailAddress,
+                        textInputType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
                         borderRadius: ProDesign.pt(8),
+                        enabled: !ref.read(loginButtonLoader),
                         onChanged: (value) {
                           email = value;
                         },
@@ -102,6 +119,8 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                         backgroundColor: ProjectColors.white,
                         borderColorFocused: ProjectColors.primary,
                         borderColor: ProjectColors.grey400,
+                        textInputAction: TextInputAction.done,
+                        enabled: !ref.read(loginButtonLoader),
                         obsecureText: true,
                         onChanged: (value) {
                           password = value;
@@ -148,22 +167,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                                 ],
                               ),
                         onTap: () async {
-                          if (ref.read(loginButtonLoader) != true) {
-                            if (_formKey.currentState!.validate()) {
-                              ref
-                                  .read(loginButtonLoader.notifier)
-                                  .update((state) => true);
-                              bool loggedIn = await loginMidleWear(
-                                  email: email, password: password);
-                              ref
-                                  .read(loginButtonLoader.notifier)
-                                  .update((state) => false);
-
-                              if (loggedIn == true) {
-                                pushAndRemoveAll(screen: const HomeScreen());
-                              }
-                            }
-                          }
+                          onTapLogin();
                         },
                       )
                     ],
