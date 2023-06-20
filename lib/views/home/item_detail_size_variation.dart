@@ -15,27 +15,24 @@ import '../../providers/checkout_model_provider.dart';
 import '../../utilities/colors.dart';
 import '../shared/widgets/loading_indicator.dart';
 
-class ItemDetailVariation extends ConsumerStatefulWidget {
+class ItemDetailSizeVariation extends ConsumerStatefulWidget {
   final Items item;
-  const ItemDetailVariation({super.key, required this.item});
+  const ItemDetailSizeVariation({super.key, required this.item});
 
   @override
-  ConsumerState<ItemDetailVariation> createState() =>
-      _ItemDetailVariationState();
+  ConsumerState<ItemDetailSizeVariation> createState() =>
+      _ItemDetailSizeVariationState();
 }
 
-class _ItemDetailVariationState extends ConsumerState<ItemDetailVariation> {
+class _ItemDetailSizeVariationState
+    extends ConsumerState<ItemDetailSizeVariation> {
   bool sizeAvailable = false;
-  bool sideAvailable = false;
+
   @override
   void initState() {
     if (widget.item.variationType == "size") {
       if (widget.item.sizes != null && widget.item.sizes!.isNotEmpty) {
         sizeAvailable = true;
-      }
-    } else if (widget.item.variationType == "side") {
-      if (widget.item.sides != null && widget.item.sides!.isNotEmpty) {
-        sideAvailable = true;
       }
     }
     super.initState();
@@ -44,6 +41,7 @@ class _ItemDetailVariationState extends ConsumerState<ItemDetailVariation> {
   @override
   Widget build(BuildContext context) {
     CheckoutModel checkoutModel = ref.watch(checkoutModelProvider);
+
     print(checkoutModel.toJson());
     return ProRadiusClip(
       customBorderRadius: BorderRadius.all(Radius.circular(ProDesign.pt(12))),
@@ -220,16 +218,10 @@ class _ItemDetailVariationState extends ConsumerState<ItemDetailVariation> {
                                   backgroundColor:
                                       ProjectColors.red500.withOpacity(0.15),
                                   onTap: () {
-                                    if (widget.item.variationType == "size") {
-                                      removeCheckoutModelSize(
-                                          ref: ref,
-                                          itemName: widget.item.name ?? "NA",
-                                          selectedSize: size);
-                                    } else if (widget.item.variationType ==
-                                        "side") {
-                                      updateCheckoutModelSide(
-                                          ref: ref, item: widget.item);
-                                    }
+                                    removeCheckoutModelSize(
+                                        ref: ref,
+                                        itemName: widget.item.name ?? "NA",
+                                        selectedSize: size);
                                   },
                                 ),
                                 const Gap(x: 10),
@@ -263,16 +255,10 @@ class _ItemDetailVariationState extends ConsumerState<ItemDetailVariation> {
                                   backgroundColor:
                                       ProjectColors.green500.withOpacity(0.15),
                                   onTap: () {
-                                    if (widget.item.variationType == "size") {
-                                      addCheckoutModelSize(
-                                          ref: ref,
-                                          itemName: widget.item.name ?? "NA",
-                                          selectedSize: size);
-                                    } else if (widget.item.variationType ==
-                                        "side") {
-                                      updateCheckoutModelSide(
-                                          ref: ref, item: widget.item);
-                                    }
+                                    addCheckoutModelSize(
+                                        ref: ref,
+                                        itemName: widget.item.name ?? "NA",
+                                        selectedSize: size);
                                   },
                                 ),
                               ],
@@ -281,75 +267,6 @@ class _ItemDetailVariationState extends ConsumerState<ItemDetailVariation> {
                         }).toList(),
                       )
                     : const SizedBox.shrink(),
-                sideAvailable == true
-                    ? Padding(
-                        padding: EdgeInsets.only(
-                          top: ProDesign.pt(20),
-                        ),
-                        child: ProCard(
-                          disableShadow: true,
-                          width: double.infinity,
-                          borderRadius: ProDesign.pt(8),
-                          backgroundColor:
-                              ProjectColors.primary.withOpacity(0.1),
-                          padding: EdgeInsets.only(
-                            top: ProDesign.pt(20),
-                            left: ProDesign.pt(20),
-                            right: ProDesign.pt(20),
-                            bottom: ProDesign.pt(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ProText(
-                                text:
-                                    "Select Sides (Any ${widget.item.sideSelectionLimit})",
-                                fontSize: ProDesign.sp(20),
-                                color: ProjectColors.secondary500,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              const Gap(y: 10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: widget.item.sides!.map((side) {
-                                  return ProTapper(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: ProDesign.pt(10),
-                                    ),
-                                    onTap: () {},
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        ProRadioButton(
-                                          title: "",
-                                          radioTitleGap: 0,
-                                          radioColor: ProjectColors.primary,
-                                          titleFontSize: ProDesign.sp(20),
-                                          titleWeight: FontWeight.w500,
-                                          titleColor:
-                                              ProjectColors.secondary400,
-                                          size: ProDesign.pt(20),
-                                        ),
-                                        const Gap(x: 10),
-                                        Expanded(
-                                          child: ProText(
-                                            text: side,
-                                            fontSize: ProDesign.sp(20),
-                                            color: ProjectColors.secondary400,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    : const SizedBox.shrink()
               ],
             ),
           ),
