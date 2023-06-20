@@ -82,18 +82,21 @@ class Items {
 }
 
 class Sizes {
+  String? id;
   int? price;
   String? name;
 
-  Sizes({this.price, this.name});
+  Sizes({this.id, this.price, this.name});
 
   Sizes.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     price = json['price'];
     name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['price'] = price;
     data['name'] = name;
     return data;

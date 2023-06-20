@@ -62,60 +62,6 @@ class _ItemDetailState extends State<ItemDetail> {
                 color: Colors.black.withOpacity(0.1),
                 height: ProDesign.vertically(40),
               ),
-              ProCard(
-                borderRadius: 0,
-                gradientEnable: true,
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [
-                    Colors.black.withOpacity(0.9),
-                    Colors.black.withOpacity(0.2),
-                    Colors.transparent,
-                  ],
-                ),
-                height: ProDesign.vertically(40),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: ProText(
-                            text: widget.item.name,
-                            fontSize: ProDesign.sp(20),
-                            color: ProjectColors.white,
-                            fontWeight: FontWeight.w600,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const Gap(x: 20),
-                        ProText(
-                          text:
-                              "${sizeAvailable == true ? "From " : ""}${ProjectValues.currency} ${widget.item.price}",
-                          fontSize: ProDesign.sp(20),
-                          color: ProjectColors.white,
-                          fontWeight: FontWeight.w600,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                    ProGap(y: ProDesign.pt(10)),
-                    ProText(
-                      text: widget.item.description,
-                      fontSize: ProDesign.sp(14),
-                      color: ProjectColors.white,
-                      fontWeight: FontWeight.w500,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              ),
               Align(
                 alignment: Alignment.topRight,
                 child: ProTapper(
@@ -143,129 +89,47 @@ class _ItemDetailState extends State<ItemDetail> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                sizeAvailable == true
-                    ? ProCard(
-                        disableShadow: true,
-                        borderRadius: ProDesign.pt(8),
-                        backgroundColor: ProjectColors.primary.withOpacity(0.1),
-                        padding: EdgeInsets.only(
-                          top: ProDesign.pt(20),
-                          left: ProDesign.pt(20),
-                          right: ProDesign.pt(20),
-                          bottom: ProDesign.pt(0),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ProText(
-                              text: "Select Size",
-                              fontSize: ProDesign.sp(22),
-                              color: ProjectColors.secondary500,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            const Gap(y: 20),
-                            Column(
-                              children: widget.item.sizes!.map((size) {
-                                return Padding(
-                                  padding:
-                                      EdgeInsets.only(bottom: ProDesign.pt(24)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      ProRadioButton(
-                                        radioColor: ProjectColors.primary,
-                                        title: size.name,
-                                        titleFontSize: ProDesign.sp(20),
-                                        titleWeight: FontWeight.w500,
-                                        titleColor: ProjectColors.secondary400,
-                                        size: ProDesign.pt(20),
-                                      ),
-                                      ProText(
-                                        text:
-                                            "${ProjectValues.currency} ${size.price}",
-                                        fontSize: ProDesign.sp(20),
-                                        color: ProjectColors.secondary400,
-                                        fontWeight: FontWeight.w500,
-                                      )
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ],
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-                sideAvailable == true
-                    ? Padding(
-                        padding: EdgeInsets.only(
-                          top: ProDesign.pt(20),
-                        ),
-                        child: ProCard(
-                          disableShadow: true,
-                          width: double.infinity,
-                          borderRadius: ProDesign.pt(8),
-                          backgroundColor:
-                              ProjectColors.primary.withOpacity(0.1),
-                          padding: EdgeInsets.only(
-                            top: ProDesign.pt(20),
-                            left: ProDesign.pt(20),
-                            right: ProDesign.pt(20),
-                            bottom: ProDesign.pt(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ProText(
-                                text:
-                                    "Select Sides (Any ${widget.item.sideSelectionLimit})",
-                                fontSize: ProDesign.sp(20),
-                                color: ProjectColors.secondary500,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              const Gap(y: 10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: widget.item.sides!.map((side) {
-                                  return ProTapper(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: ProDesign.pt(10),
-                                    ),
-                                    onTap: () {},
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        ProRadioButton(
-                                          title: "",
-                                          radioTitleGap: 0,
-                                          radioColor: ProjectColors.primary,
-                                          titleFontSize: ProDesign.sp(20),
-                                          titleWeight: FontWeight.w500,
-                                          titleColor:
-                                              ProjectColors.secondary400,
-                                          size: ProDesign.pt(20),
-                                        ),
-                                        const Gap(x: 10),
-                                        Expanded(
-                                          child: ProText(
-                                            text: side,
-                                            fontSize: ProDesign.sp(20),
-                                            color: ProjectColors.secondary400,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ],
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: ProText(
+                            text: widget.item.name,
+                            fontSize: ProDesign.sp(18),
+                            color: ProjectColors.secondary500,
+                            fontWeight: FontWeight.w600,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                      )
-                    : const SizedBox.shrink()
+                        const Gap(x: 20),
+                        ProText(
+                          text:
+                              "${ProjectValues.currency} ${widget.item.price}",
+                          fontSize: ProDesign.sp(18),
+                          color: ProjectColors.secondary500,
+                          fontWeight: FontWeight.w600,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                    ProGap(y: ProDesign.pt(10)),
+                    ProText(
+                      text: widget.item.description,
+                      fontSize: ProDesign.sp(14),
+                      color: ProjectColors.secondary400,
+                      fontWeight: FontWeight.w500,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

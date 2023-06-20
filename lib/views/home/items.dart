@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaphia/models/menu_items.dart';
 import 'package:kaphia/views/home/item_detail_sheet.dart';
+import 'package:kaphia/views/home/item_detail_variation_sheet.dart';
 import 'package:kaphia/views/shared/widgets/pro_bottom_sheet.dart';
 import 'package:pro_design/pro_design.dart';
 import 'package:pro_widgets/pro_widgets.dart';
@@ -57,7 +58,9 @@ class MenuItems extends ConsumerWidget {
                                   bottomLeft: Radius.zero,
                                   bottomRight: Radius.zero,
                                 ),
-                                sheetBody: ItemDetail(item: item),
+                                sheetBody: item.variationType == "none"
+                                    ? ItemDetail(item: item)
+                                    : ItemDetailVariation(item: item),
                               );
                             },
                             child: ProCard(
