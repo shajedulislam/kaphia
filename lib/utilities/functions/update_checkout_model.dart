@@ -145,3 +145,92 @@ Future removeCheckoutModelSide({
         );
   }
 }
+
+addCheckoutModelNormal({
+  required WidgetRef ref,
+  required Items item,
+}) {
+  List<CheckoutOrderItems>? orderItems =
+      ref.read(checkoutModelProvider).orderItems ?? [];
+
+  if (orderItems.isNotEmpty) {
+    CheckoutOrderItems? checkedItem;
+    int index = -1;
+    for (var element in orderItems) {
+      index++;
+      if (element.id == item.id) {
+        checkedItem = element;
+        break;
+      }
+    }
+    if (checkedItem != null &&
+        checkedItem.id != null &&
+        checkedItem.quantity != null &&
+        checkedItem.price != null) {
+      checkedItem.quantity = checkedItem.quantity! + 1;
+      checkedItem.price = item.price! * checkedItem.quantity!;
+      orderItems[index] = checkedItem;
+      ref.read(checkoutModelProvider.notifier).update(
+            (state) => state.copyWith(orderItems: orderItems),
+          );
+    } else {
+      orderItems.add(CheckoutOrderItems(
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: 1,
+        variationType: "none",
+      ));
+      ref.read(checkoutModelProvider.notifier).update(
+            (state) => state.copyWith(orderItems: orderItems),
+          );
+    }
+  } else {
+    orderItems.add(CheckoutOrderItems(
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      quantity: 1,
+      variationType: "none",
+    ));
+    ref.read(checkoutModelProvider.notifier).update(
+          (state) => state.copyWith(orderItems: orderItems),
+        );
+  }
+}
+
+removeCheckoutModelNormal({
+  required WidgetRef ref,
+  String? removeID,
+  int? price,
+}) {
+  List<CheckoutOrderItems>? orderItems =
+      ref.read(checkoutModelProvider).orderItems;
+
+  if (orderItems != null && orderItems.isNotEmpty) {
+    CheckoutOrderItems? checkedItem;
+    int index = -1;
+    for (var element in orderItems) {
+      index++;
+      if (element.id == removeID) {
+        checkedItem = element;
+        break;
+      }
+    }
+    if (checkedItem != null &&
+        checkedItem.id != null &&
+        checkedItem.quantity != null &&
+        price != null) {
+      if (checkedItem.quantity! > 1) {
+        checkedItem.quantity = checkedItem.quantity! - 1;
+        checkedItem.price = price * checkedItem.quantity!;
+        orderItems[index] = checkedItem;
+      } else if (checkedItem.quantity == 1) {
+        orderItems.removeAt(index);
+      }
+      ref.read(checkoutModelProvider.notifier).update(
+            (state) => state.copyWith(orderItems: orderItems),
+          );
+    }
+  }
+}
