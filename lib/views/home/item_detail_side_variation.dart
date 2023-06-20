@@ -27,37 +27,21 @@ class ItemDetailSideVariation extends ConsumerStatefulWidget {
 
 class _ItemDetailSideVariationState
     extends ConsumerState<ItemDetailSideVariation> {
-  bool itemInCart = false;
   final _selectedSidesProvider =
       StateProvider.autoDispose<List<String>?>((ref) {
     return [];
   });
+  final _selectedQuantityProvider = StateProvider.autoDispose<int>((ref) {
+    return 0;
+  });
   List<String> selectedSides = [];
-  @override
-  void initState() {
-    List<CheckoutOrderItems>? orderItems =
-        ref.read(checkoutModelProvider).orderItems;
-    if (orderItems != null && orderItems.isNotEmpty) {
-      for (var element in orderItems) {
-        if (element.id == widget.item.id) {
-          setState(() {
-            itemInCart = true;
-            selectedSides = element.sides ?? [];
-          });
-
-          break;
-        }
-      }
-    }
-    super.initState();
-  }
+  int selectedQuantity = 0;
 
   @override
   Widget build(BuildContext context) {
     CheckoutModel checkoutModel = ref.watch(checkoutModelProvider);
-    if (itemInCart != true) {
-      selectedSides = ref.watch(_selectedSidesProvider) ?? [];
-    }
+    selectedSides = ref.watch(_selectedSidesProvider) ?? [];
+    selectedQuantity = ref.watch(_selectedQuantityProvider) ?? 0;
     print(checkoutModel.toJson());
     return ProRadiusClip(
       customBorderRadius: BorderRadius.all(Radius.circular(ProDesign.pt(12))),
@@ -252,47 +236,97 @@ class _ItemDetailSideVariationState
           selectedSides.isNotEmpty
               ? Padding(
                   padding: EdgeInsets.all(ProDesign.pt(20)),
-                  child: ProButtonBasic(
-                    width: double.infinity,
-                    height: ProDesign.pt(61),
-                    borderRadius: ProDesign.pt(8),
-                    fontSize: ProDesign.sp(16),
-                    fontColor: ProjectColors.white,
-                    backgroundColor: itemInCart != true
-                        ? ProjectColors.green500
-                        : ProjectColors.red500,
-                    text:
-                        itemInCart != true ? "Add to Cart" : "Remove from Cart",
-                    onTap: () {
-                      if (itemInCart != true) {
-                        addCheckoutModelSide(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ProButtonBasic(
+                          width: double.infinity,
+                          height: ProDesign.pt(50),
+                          borderRadius: ProDesign.pt(8),
+                          fontSize: ProDesign.sp(16),
+                          fontColor: ProjectColors.white,
+                          backgroundColor: ProjectColors.green500,
+                          text: "Add to Cart",
+                          onTap: () {
+                            if (selectedQuantity > 0) {
+                              addCheckoutModelSide(
                                 ref: ref,
                                 item: widget.item,
-                                sideList: selectedSides)
-                            .then((value) {
-                          if (value == true) {
-                            pop();
-                          } else {
-                            setState(() {
-                              selectedSides = [];
-                              itemInCart = false;
-                              ref.invalidate(_selectedSidesProvider);
-                            });
+                                quantity: selectedQuantity,
+                                sideList: selectedSides,
+                              ).then((value) {
+                                if (value == true) {
+                                  showSnackBar(
+                                    text: "Item added to cart.",
+                                    color: ProjectColors.green500,
+                                    time: 1,
+                                  );
+                                }
+                                setState(() {
+                                  selectedSides = [];
+                                  selectedQuantity = 0;
+                                  ref.invalidate(_selectedSidesProvider);
+                                  ref.invalidate(_selectedQuantityProvider);
+                                });
+                              });
+                            }
+                          },
+                        ),
+                      ),
+                      const Gap(x: 20),
+                      ProButtonBasic(
+                        height: ProDesign.pt(50),
+                        width: ProDesign.pt(50),
+                        borderRadius: ProDesign.pt(6),
+                        customChild: Icon(
+                          Icons.remove,
+                          size: ProDesign.pt(28),
+                          color: ProjectColors.red500,
+                        ),
+                        backgroundColor: ProjectColors.red500.withOpacity(0.15),
+                        onTap: () {
+                          if (selectedQuantity > 0) {
+                            ref
+                                .read(_selectedQuantityProvider.notifier)
+                                .state--;
                           }
-                        });
-                      } else {
-                        if (widget.item.id != null) {
-                          removeCheckoutModelSide(ref: ref, id: widget.item.id!)
-                              .then((value) {
-                            setState(() {
-                              selectedSides = [];
-                              itemInCart = false;
-                              ref.invalidate(_selectedSidesProvider);
-                            });
-                          });
-                        }
-                      }
-                    },
+                        },
+                      ),
+                      const Gap(x: 10),
+                      ProCard(
+                        height: ProDesign.pt(50),
+                        width: ProDesign.pt(50),
+                        borderRadius: ProDesign.pt(6),
+                        padding: const EdgeInsets.all(0),
+                        disableShadow: true,
+                        backgroundColor: ProjectColors.grey200,
+                        child: Center(
+                          child: ProText(
+                            text: "$selectedQuantity",
+                            fontSize: ProDesign.sp(20),
+                            color: ProjectColors.secondary400,
+                            fontWeight: FontWeight.w500,
+                            maxLines: 1,
+                          ),
+                        ),
+                      ),
+                      const Gap(x: 10),
+                      ProButtonBasic(
+                        height: ProDesign.pt(50),
+                        width: ProDesign.pt(50),
+                        borderRadius: ProDesign.pt(6),
+                        customChild: Icon(
+                          Icons.add,
+                          size: ProDesign.pt(28),
+                          color: ProjectColors.green500,
+                        ),
+                        backgroundColor:
+                            ProjectColors.green500.withOpacity(0.15),
+                        onTap: () {
+                          ref.read(_selectedQuantityProvider.notifier).state++;
+                        },
+                      ),
+                    ],
                   ),
                 )
               : const SizedBox.shrink()

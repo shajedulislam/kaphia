@@ -99,6 +99,7 @@ removeCheckoutModelSize({
 Future<bool> addCheckoutModelSide({
   required WidgetRef ref,
   required List<String> sideList,
+  required int quantity,
   required Items item,
 }) async {
   try {
@@ -108,8 +109,8 @@ Future<bool> addCheckoutModelSide({
     orderItems.add(CheckoutOrderItems(
       id: item.id,
       name: item.name,
-      price: item.price,
-      quantity: 1,
+      price: item.price! * quantity,
+      quantity: quantity,
       variationType: "side",
       sides: sideList,
     ));
