@@ -27,7 +27,7 @@ addCheckoutModelSize({
         checkedItem.quantity != null &&
         checkedItem.price != null) {
       checkedItem.quantity = checkedItem.quantity! + 1;
-      checkedItem.price = selectedSize.price! * checkedItem.quantity!;
+      checkedItem.price = selectedSize.price;
       orderItems[index] = checkedItem;
       ref.read(checkoutModelProvider.notifier).update(
             (state) => state.copyWith(orderItems: orderItems),
@@ -84,7 +84,7 @@ removeCheckoutModelSize({
         checkedItem.price != null) {
       if (checkedItem.quantity! > 1) {
         checkedItem.quantity = checkedItem.quantity! - 1;
-        checkedItem.price = selectedSize.price! * checkedItem.quantity!;
+        checkedItem.price = selectedSize.price;
         orderItems[index] = checkedItem;
       } else if (checkedItem.quantity == 1) {
         orderItems.removeAt(index);
@@ -109,7 +109,7 @@ Future<bool> addCheckoutModelSide({
     orderItems.add(CheckoutOrderItems(
       id: item.id,
       name: item.name,
-      price: item.price! * quantity,
+      price: item.price,
       quantity: quantity,
       variationType: "side",
       sides: sideList,
@@ -168,7 +168,7 @@ addCheckoutModelNormal({
         checkedItem.quantity != null &&
         checkedItem.price != null) {
       checkedItem.quantity = checkedItem.quantity! + 1;
-      checkedItem.price = item.price! * checkedItem.quantity!;
+      checkedItem.price = item.price;
       orderItems[index] = checkedItem;
       ref.read(checkoutModelProvider.notifier).update(
             (state) => state.copyWith(orderItems: orderItems),
@@ -223,7 +223,7 @@ removeCheckoutModelNormal({
         price != null) {
       if (checkedItem.quantity! > 1) {
         checkedItem.quantity = checkedItem.quantity! - 1;
-        checkedItem.price = price * checkedItem.quantity!;
+        checkedItem.price = price;
         orderItems[index] = checkedItem;
       } else if (checkedItem.quantity == 1) {
         orderItems.removeAt(index);

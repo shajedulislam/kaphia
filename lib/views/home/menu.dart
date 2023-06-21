@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaphia/providers/firebase.dart';
 import 'package:kaphia/providers/selected_menu.dart';
 import 'package:kaphia/utilities/functions/call_back.dart';
+import 'package:kaphia/views/home/home_bottom_cart.dart';
 import 'package:kaphia/views/home/items.dart';
 import 'package:kaphia/views/shared/widgets/loading_indicator.dart';
 import 'package:pro_design/pro_design.dart';
@@ -19,6 +20,7 @@ class Menu extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final menuStream = ref.watch(menuStreamProvider);
+
     return menuStream.when(
       data: (menu) {
         if (menu != null && menu.docs.isNotEmpty) {
@@ -133,6 +135,7 @@ class Menu extends ConsumerWidget {
                 ],
               ),
               const Expanded(child: MenuItems()),
+              const HomeBottomCart()
             ],
           );
         } else {

@@ -68,7 +68,8 @@ class MenuItems extends ConsumerWidget {
                                           : ItemDetail(item: item));
                             },
                             child: ProCard(
-                              backgroundColor: ProjectColors.grey100,
+                              backgroundColor: ProjectColors.grey200,
+                              disableShadow: true,
                               width: double.infinity,
                               height: ProDesign.pt(160),
                               padding: EdgeInsets.all(ProDesign.pt(20)),
