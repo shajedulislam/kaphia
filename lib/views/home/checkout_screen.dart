@@ -53,10 +53,9 @@ class CHeckoutScreen extends ConsumerWidget {
                                 padding:
                                     EdgeInsets.only(bottom: ProDesign.pt(20)),
                                 child: ProCard(
-                                  backgroundColor: ProjectColors.grey100,
+                                  backgroundColor: ProjectColors.grey200,
                                   disableShadow: true,
                                   width: double.infinity,
-                                  height: ProDesign.pt(160),
                                   padding: EdgeInsets.all(ProDesign.pt(20)),
                                   borderRadius: ProDesign.pt(8),
                                   child: orderItem.variationType == "size"
@@ -77,9 +76,9 @@ class CHeckoutScreen extends ConsumerWidget {
                                             ProText(
                                               text:
                                                   "${ProjectValues.currencySymbol} $price x $quantity = ${quantity * price} ${ProjectValues.currencySymbol}",
-                                              fontSize: ProDesign.sp(18),
+                                              fontSize: ProDesign.sp(16),
                                               color: ProjectColors.secondary400,
-                                              fontWeight: FontWeight.w600,
+                                              fontWeight: FontWeight.w500,
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
                                             ),
@@ -89,9 +88,6 @@ class CHeckoutScreen extends ConsumerWidget {
                                           ? Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
                                               children: [
                                                 Column(
                                                   crossAxisAlignment:
@@ -114,11 +110,11 @@ class CHeckoutScreen extends ConsumerWidget {
                                                       text:
                                                           "Sides: ${orderItem.sides?.join(", ")}",
                                                       fontSize:
-                                                          ProDesign.sp(18),
+                                                          ProDesign.sp(16),
                                                       color: ProjectColors
                                                           .secondary400,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                          FontWeight.w500,
                                                       maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
@@ -129,7 +125,7 @@ class CHeckoutScreen extends ConsumerWidget {
                                                 ProText(
                                                   text:
                                                       "${ProjectValues.currencySymbol} $price x $quantity = ${quantity * price} ${ProjectValues.currencySymbol}",
-                                                  fontSize: ProDesign.sp(18),
+                                                  fontSize: ProDesign.sp(16),
                                                   color: ProjectColors
                                                       .secondary400,
                                                   fontWeight: FontWeight.w500,
@@ -158,11 +154,11 @@ class CHeckoutScreen extends ConsumerWidget {
                                                       text:
                                                           "${ProjectValues.currencySymbol} $price x $quantity = ${quantity * price} ${ProjectValues.currencySymbol}",
                                                       fontSize:
-                                                          ProDesign.sp(18),
+                                                          ProDesign.sp(16),
                                                       color: ProjectColors
                                                           .secondary400,
                                                       fontWeight:
-                                                          FontWeight.w600,
+                                                          FontWeight.w500,
                                                       maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
