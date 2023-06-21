@@ -1,6 +1,7 @@
 class CheckoutModel {
+  String? orderId;
   String? orderStatus;
-  String? orderNumber;
+  int? orderNumber;
   String? orderDate;
   String? orderTime;
   String? tableNumber;
@@ -8,6 +9,7 @@ class CheckoutModel {
   List<CheckoutOrderItems>? orderItems;
 
   CheckoutModel({
+    this.orderId,
     this.orderStatus,
     this.orderNumber,
     this.orderDate,
@@ -18,8 +20,9 @@ class CheckoutModel {
   });
 
   CheckoutModel copyWith({
+    String? orderId,
     String? orderStatus,
-    String? orderNumber,
+    int? orderNumber,
     String? orderDate,
     String? orderTime,
     String? tableNumber,
@@ -27,6 +30,7 @@ class CheckoutModel {
     List<CheckoutOrderItems>? orderItems,
   }) {
     return CheckoutModel(
+      orderId: orderId ?? this.orderId,
       orderStatus: orderStatus ?? this.orderStatus,
       orderNumber: orderNumber ?? this.orderNumber,
       orderDate: orderDate ?? this.orderDate,
@@ -38,6 +42,7 @@ class CheckoutModel {
   }
 
   CheckoutModel.fromJson(Map<String, dynamic> json) {
+    orderId = json['orderId'];
     orderStatus = json['orderStatus'];
     orderNumber = json['orderNumber'];
     orderDate = json['orderDate'];
@@ -54,6 +59,7 @@ class CheckoutModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['orderId'] = orderId;
     data['orderStatus'] = orderStatus;
     data['orderNumber'] = orderNumber;
     data['orderDate'] = orderDate;

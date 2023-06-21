@@ -16,7 +16,6 @@ class CHeckoutScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     CheckoutModel checkoutModel = ref.watch(checkoutModelProvider);
-    print(checkoutModel.toJson());
     return GestureDetector(
       onTap: () {
         unFocus(context);

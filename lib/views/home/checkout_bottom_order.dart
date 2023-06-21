@@ -1,14 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaphia/providers/checkout_model_provider.dart';
+import 'package:kaphia/providers/login_button_loader.dart';
 import 'package:kaphia/utilities/constants/values.dart';
+import 'package:kaphia/utilities/functions/formatter.dart';
+import 'package:kaphia/utilities/functions/navigation.dart';
 import 'package:kaphia/views/shared/widgets/gap.dart';
+import 'package:kaphia/views/shared/widgets/snackbar.dart';
 import 'package:pro_design/pro_design.dart';
 import 'package:pro_widgets/pro_widgets.dart';
 
 import '../../models/checkout.dart';
 import '../../utilities/colors.dart';
 import '../../utilities/functions/null_checker.dart';
+import '../shared/widgets/loading_indicator.dart';
 
 class CheckoutBottomOrder extends ConsumerStatefulWidget {
   const CheckoutBottomOrder({super.key});
@@ -22,6 +28,69 @@ class _CheckoutBottomOrderState extends ConsumerState<CheckoutBottomOrder> {
   late String tableNumber;
   late String specialInstruction;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  placeOrder() {
+    CheckoutModel checkoutModel = ref.read(checkoutModelProvider);
+    String orderDate = ProFormatter()
+        .dateTimeFormatter(format: "dd-MM-yyyy", dateTime: DateTime.now());
+    checkoutModel.orderId = "o${DateTime.now().millisecondsSinceEpoch}";
+    checkoutModel.orderDate = orderDate;
+    checkoutModel.orderTime = ProFormatter()
+        .dateTimeFormatter(format: "hh:mm aa", dateTime: DateTime.now());
+
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('order').doc(orderDate);
+
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(documentReference);
+      int totalOrders = 0;
+      if (!snapshot.exists) {
+        checkoutModel.orderNumber = 1;
+        totalOrders = 1;
+
+        transaction.set(
+          documentReference,
+          {
+            "total_orders": totalOrders,
+            "orders": FieldValue.arrayUnion(
+              [
+                checkoutModel.toJson(),
+              ],
+            )
+          },
+        );
+      } else {
+        Map dataDB = snapshot.data() as Map<String, dynamic>;
+        totalOrders = dataDB['total_orders'] + 1;
+        checkoutModel.orderNumber = totalOrders;
+        transaction.update(
+          documentReference,
+          {
+            "total_orders": totalOrders,
+            "orders": FieldValue.arrayUnion(
+              [
+                checkoutModel.toJson(),
+              ],
+            )
+          },
+        );
+      }
+    }).then((_) {
+      showSnackBar(
+        text: "Order placed successfully.",
+        color: ProjectColors.green500,
+      );
+      ref.invalidate(checkoutModelProvider);
+      ref.read(orderButtonLoader.notifier).update((state) => false);
+      pop();
+    }).catchError((error) {
+      ref.read(orderButtonLoader.notifier).update((state) => false);
+      showSnackBar(
+        text: "Something went wrong while placing the order. Please try again.",
+        color: ProjectColors.red500,
+      );
+    });
+  }
 
   int totalMoneyCounter(List<CheckoutOrderItems> orderItemsTemp) {
     int totalMoney = 0;
@@ -76,7 +145,7 @@ class _CheckoutBottomOrderState extends ConsumerState<CheckoutBottomOrder> {
                         textInputType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         borderRadius: ProDesign.pt(8),
-                        // enabled: !ref.read(loginButtonLoader),
+                        enabled: !ref.read(orderButtonLoader),
                         onChanged: (value) {
                           tableNumber = value;
                           ref
@@ -112,8 +181,7 @@ class _CheckoutBottomOrderState extends ConsumerState<CheckoutBottomOrder> {
                         borderColorFocused: ProjectColors.primary,
                         borderColor: ProjectColors.grey400,
                         textInputAction: TextInputAction.done,
-                        // enabled: !ref.read(loginButtonLoader),
-
+                        enabled: !ref.read(orderButtonLoader),
                         onChanged: (value) {
                           specialInstruction = value;
                           ref
@@ -150,21 +218,47 @@ class _CheckoutBottomOrderState extends ConsumerState<CheckoutBottomOrder> {
                       customChild: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ProText(
-                            text: "Place Order",
-                            fontSize: ProDesign.sp(20),
-                            color: ProjectColors.white,
-                            fontWeight: FontWeight.w700,
-                          ),
-                          const Gap(x: 16),
-                          Icon(
-                            Icons.arrow_forward_rounded,
-                            size: ProDesign.pt(28),
-                          )
+                          ref.watch(orderButtonLoader) != true
+                              ? Row(
+                                  children: [
+                                    ProText(
+                                      text: "Place Order",
+                                      fontSize: ProDesign.sp(20),
+                                      color: ProjectColors.white,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                    const Gap(x: 16),
+                                    Icon(
+                                      Icons.arrow_forward_rounded,
+                                      size: ProDesign.pt(28),
+                                    )
+                                  ],
+                                )
+                              : Row(
+                                  children: [
+                                    ProText(
+                                      text: "Please Wait",
+                                      fontSize: ProDesign.sp(20),
+                                      color: ProjectColors.white,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                    const Gap(x: 16),
+                                    const NormalLoader(
+                                      color: ProjectColors.white,
+                                    )
+                                  ],
+                                )
                         ],
                       ),
                       onTap: () {
-                        if (_formKey.currentState!.validate()) {}
+                        if (ref.read(orderButtonLoader) != true) {
+                          if (_formKey.currentState!.validate()) {
+                            ref
+                                .read(orderButtonLoader.notifier)
+                                .update((state) => true);
+                            placeOrder();
+                          }
+                        }
                       },
                     ),
                   ],
