@@ -142,7 +142,7 @@ class _CheckoutBottomOrderState extends ConsumerState<CheckoutBottomOrder> {
                         backgroundColor: ProjectColors.white,
                         borderColorFocused: ProjectColors.primary,
                         borderColor: ProjectColors.grey400,
-                        textInputType: TextInputType.emailAddress,
+                        textInputType: TextInputType.text,
                         textInputAction: TextInputAction.next,
                         borderRadius: ProDesign.pt(8),
                         enabled: !ref.read(orderButtonLoader),
@@ -180,6 +180,7 @@ class _CheckoutBottomOrderState extends ConsumerState<CheckoutBottomOrder> {
                         backgroundColor: ProjectColors.white,
                         borderColorFocused: ProjectColors.primary,
                         borderColor: ProjectColors.grey400,
+                        textInputType: TextInputType.text,
                         textInputAction: TextInputAction.done,
                         enabled: !ref.read(orderButtonLoader),
                         onChanged: (value) {
