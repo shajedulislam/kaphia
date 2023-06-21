@@ -46,7 +46,7 @@ class MenuItems extends ConsumerWidget {
                                   isScrollControlled: true,
                                   sheetHeight: ProDesign.vertically(100),
                                   sheetMargin: EdgeInsets.only(
-                                    top: ProDesign.vertically(9),
+                                    top: ProDesign.vertically(8),
                                   ),
                                   sheetBackgroundColor: ProjectColors.white,
                                   onAppBarCloseIconTap: () {
