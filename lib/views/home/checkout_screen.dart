@@ -15,10 +15,20 @@ class CHeckoutScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     CheckoutModel checkoutModel = ref.watch(checkoutModelProvider);
+    print(checkoutModel.toJson());
     return Scaffold(
         backgroundColor: ProjectColors.white,
         appBar: AppBar(
           backgroundColor: ProjectColors.secondary500,
+          title: Padding(
+            padding: EdgeInsets.only(left: ProDesign.pt(6)),
+            child: ProText(
+              text: "Cart",
+              fontSize: ProDesign.sp(20),
+              color: ProjectColors.white,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
         body: checkoutModel.orderItems != null &&
                 checkoutModel.orderItems!.isNotEmpty

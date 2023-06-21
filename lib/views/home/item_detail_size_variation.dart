@@ -42,7 +42,6 @@ class _ItemDetailSizeVariationState
   Widget build(BuildContext context) {
     CheckoutModel checkoutModel = ref.watch(checkoutModelProvider);
 
-    print(checkoutModel.toJson());
     return ProRadiusClip(
       customBorderRadius: BorderRadius.all(Radius.circular(ProDesign.pt(12))),
       child: ListView(

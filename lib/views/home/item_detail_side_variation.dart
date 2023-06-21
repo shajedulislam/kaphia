@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kaphia/models/checkout.dart';
 import 'package:kaphia/models/menu_items.dart';
 import 'package:kaphia/utilities/constants/values.dart';
 import 'package:kaphia/utilities/functions/navigation.dart';
@@ -12,7 +11,6 @@ import 'package:kaphia/views/shared/widgets/snackbar.dart';
 import 'package:pro_design/pro_design.dart';
 import 'package:pro_widgets/pro_widgets.dart';
 
-import '../../providers/checkout_model_provider.dart';
 import '../../utilities/colors.dart';
 import '../shared/widgets/loading_indicator.dart';
 
@@ -39,10 +37,8 @@ class _ItemDetailSideVariationState
 
   @override
   Widget build(BuildContext context) {
-    CheckoutModel checkoutModel = ref.watch(checkoutModelProvider);
     selectedSides = ref.watch(_selectedSidesProvider) ?? [];
     selectedQuantity = ref.watch(_selectedQuantityProvider) ?? 0;
-    print(checkoutModel.toJson());
     return ProRadiusClip(
       customBorderRadius: BorderRadius.all(Radius.circular(ProDesign.pt(12))),
       child: Column(
