@@ -4,6 +4,7 @@ class CheckoutModel {
   int? orderNumber;
   String? orderDate;
   String? orderTime;
+  int? orderBill;
   String? tableNumber;
   String? specialInstruction;
   List<CheckoutOrderItems>? orderItems;
@@ -14,6 +15,7 @@ class CheckoutModel {
     this.orderNumber,
     this.orderDate,
     this.orderTime,
+    this.orderBill,
     this.tableNumber,
     this.specialInstruction,
     this.orderItems,
@@ -25,6 +27,7 @@ class CheckoutModel {
     int? orderNumber,
     String? orderDate,
     String? orderTime,
+    int? orderBill,
     String? tableNumber,
     String? specialInstruction,
     List<CheckoutOrderItems>? orderItems,
@@ -35,6 +38,7 @@ class CheckoutModel {
       orderNumber: orderNumber ?? this.orderNumber,
       orderDate: orderDate ?? this.orderDate,
       orderTime: orderTime ?? this.orderTime,
+      orderBill: orderBill ?? this.orderBill,
       tableNumber: tableNumber ?? this.tableNumber,
       specialInstruction: specialInstruction ?? this.specialInstruction,
       orderItems: orderItems ?? this.orderItems,
@@ -47,6 +51,7 @@ class CheckoutModel {
     orderNumber = json['orderNumber'];
     orderDate = json['orderDate'];
     orderTime = json['orderTime'];
+    orderBill = json['orderBill'];
     tableNumber = json['tableNumber'];
     specialInstruction = json['specialInstruction'];
     if (json['orderItems'] != null) {
@@ -64,6 +69,7 @@ class CheckoutModel {
     data['orderNumber'] = orderNumber;
     data['orderDate'] = orderDate;
     data['orderTime'] = orderTime;
+    data['orderBill'] = orderBill;
     data['tableNumber'] = tableNumber;
     data['specialInstruction'] = specialInstruction;
     if (orderItems != null) {

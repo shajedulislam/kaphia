@@ -112,7 +112,7 @@ class MenuItems extends ConsumerWidget {
                                     children: [
                                       ProText(
                                         text:
-                                            "${ProjectValues.currency} ${item.price}",
+                                            "${ProjectValues.currencySymbol} ${item.price}",
                                         fontSize: ProDesign.sp(20),
                                         color: ProjectColors.green500,
                                         fontWeight: FontWeight.w600,

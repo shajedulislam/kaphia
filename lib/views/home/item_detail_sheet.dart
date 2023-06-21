@@ -97,7 +97,8 @@ class ItemDetail extends ConsumerWidget {
                               ),
                               const Gap(x: 20),
                               ProText(
-                                text: "${ProjectValues.currency} ${item.price}",
+                                text:
+                                    "${ProjectValues.currencySymbol} ${item.price}",
                                 fontSize: ProDesign.sp(18),
                                 color: ProjectColors.secondary500,
                                 fontWeight: FontWeight.w600,

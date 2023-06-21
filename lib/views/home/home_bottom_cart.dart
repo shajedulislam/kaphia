@@ -22,10 +22,13 @@ class HomeBottomCart extends ConsumerWidget {
 
         if (orderItems.isNotEmpty) {
           return ProCard(
-            borderColor: ProjectColors.secondary100,
+            borderColor: ProjectColors.primary100,
             borderWidth: ProDesign.pt(1),
             backgroundColor: ProjectColors.grey200,
+            borderRadius: 0,
             disableShadow: true,
+            padding: EdgeInsets.symmetric(
+                horizontal: ProDesign.pt(20), vertical: ProDesign.pt(10)),
             child: Row(
               children: [
                 Expanded(

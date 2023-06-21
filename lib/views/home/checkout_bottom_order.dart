@@ -31,10 +31,21 @@ class _CheckoutBottomOrderState extends ConsumerState<CheckoutBottomOrder> {
 
   placeOrder() {
     CheckoutModel checkoutModel = ref.read(checkoutModelProvider);
+    int totalMoney = 0;
+    checkoutModel.orderItems?.forEach((element) {
+      if (element.price != null &&
+          element.price! > 0 &&
+          element.quantity != null &&
+          element.quantity! > 0) {
+        totalMoney = totalMoney + (element.price! * element.quantity!);
+      }
+    });
+
     String orderDate = ProFormatter()
         .dateTimeFormatter(format: "dd-MM-yyyy", dateTime: DateTime.now());
     checkoutModel.orderId = "o${DateTime.now().millisecondsSinceEpoch}";
     checkoutModel.orderDate = orderDate;
+    checkoutModel.orderBill = totalMoney;
     checkoutModel.orderTime = ProFormatter()
         .dateTimeFormatter(format: "hh:mm aa", dateTime: DateTime.now());
 
@@ -118,24 +129,25 @@ class _CheckoutBottomOrderState extends ConsumerState<CheckoutBottomOrder> {
             borderColor: ProjectColors.primary100,
             borderWidth: ProDesign.pt(1),
             backgroundColor: ProjectColors.grey200,
+            padding: EdgeInsets.all(ProDesign.pt(20)),
             disableShadow: true,
             child: Column(
               children: [
                 Form(
                   key: _formKey,
-                  child: Column(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ProTextFormField(
                         hint: "Table Number",
-                        width: ProDesign.pt(350),
+                        width: ProDesign.horizontally(30),
                         paddingVertical: ProDesign.pt(20),
-                        fontSize: ProDesign.sp(18),
-                        fontWeight: FontWeight.w600,
+                        fontSize: ProDesign.sp(16),
+                        fontWeight: FontWeight.w500,
                         fontColor: ProjectColors.secondary500,
                         hintColor: ProjectColors.secondary300,
-                        hintFontSize: ProDesign.sp(18),
-                        hintFontWeight: FontWeight.w500,
+                        hintFontSize: ProDesign.sp(16),
+                        hintFontWeight: FontWeight.w400,
                         errorFontSize: ProDesign.sp(16),
                         errorFontWeight: FontWeight.w400,
                         errorFontColor: ProjectColors.red500,
@@ -161,38 +173,39 @@ class _CheckoutBottomOrderState extends ConsumerState<CheckoutBottomOrder> {
                           }
                         },
                       ),
-                      ProGap(y: ProDesign.pt(20)),
-                      ProTextFormField(
-                        hint: "Special Instruction",
-                        width: double.infinity,
-                        maxLines: 3,
-                        paddingVertical: ProDesign.pt(20),
-                        fontSize: ProDesign.sp(18),
-                        borderRadius: ProDesign.pt(8),
-                        fontWeight: FontWeight.w600,
-                        fontColor: ProjectColors.secondary500,
-                        hintColor: ProjectColors.secondary300,
-                        hintFontSize: ProDesign.sp(18),
-                        hintFontWeight: FontWeight.w500,
-                        errorFontSize: ProDesign.sp(16),
-                        errorFontWeight: FontWeight.w400,
-                        errorFontColor: ProjectColors.red500,
-                        backgroundColor: ProjectColors.white,
-                        borderColorFocused: ProjectColors.primary,
-                        borderColor: ProjectColors.grey400,
-                        textInputType: TextInputType.text,
-                        textInputAction: TextInputAction.done,
-                        enabled: !ref.read(orderButtonLoader),
-                        onChanged: (value) {
-                          specialInstruction = value;
-                          ref
-                              .read(checkoutModelProvider.notifier)
-                              .state
-                              .specialInstruction = value;
-                        },
-                        validator: (value) {
-                          return null;
-                        },
+                      const Gap(x: 20),
+                      Expanded(
+                        child: ProTextFormField(
+                          hint: "Special Instruction",
+                          width: double.infinity,
+                          paddingVertical: ProDesign.pt(20),
+                          fontSize: ProDesign.sp(16),
+                          borderRadius: ProDesign.pt(8),
+                          fontWeight: FontWeight.w500,
+                          fontColor: ProjectColors.secondary500,
+                          hintColor: ProjectColors.secondary300,
+                          hintFontSize: ProDesign.sp(16),
+                          hintFontWeight: FontWeight.w400,
+                          errorFontSize: ProDesign.sp(16),
+                          errorFontWeight: FontWeight.w400,
+                          errorFontColor: ProjectColors.red500,
+                          backgroundColor: ProjectColors.white,
+                          borderColorFocused: ProjectColors.primary,
+                          borderColor: ProjectColors.grey400,
+                          textInputType: TextInputType.text,
+                          textInputAction: TextInputAction.done,
+                          enabled: !ref.read(orderButtonLoader),
+                          onChanged: (value) {
+                            specialInstruction = value;
+                            ref
+                                .read(checkoutModelProvider.notifier)
+                                .state
+                                .specialInstruction = value;
+                          },
+                          validator: (value) {
+                            return null;
+                          },
+                        ),
                       ),
                     ],
                   ),

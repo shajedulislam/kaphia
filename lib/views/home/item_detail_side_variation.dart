@@ -100,7 +100,7 @@ class _ItemDetailSideVariationState
                               const Gap(x: 20),
                               ProText(
                                 text:
-                                    "${ProjectValues.currency} ${widget.item.price}",
+                                    "${ProjectValues.currencySymbol} ${widget.item.price}",
                                 fontSize: ProDesign.sp(18),
                                 color: ProjectColors.white,
                                 fontWeight: FontWeight.w600,

@@ -100,7 +100,7 @@ class _ItemDetailSizeVariationState
                         const Gap(x: 20),
                         ProText(
                           text:
-                              "${sizeAvailable == true ? "From " : ""}${ProjectValues.currency} ${widget.item.price}",
+                              "${sizeAvailable == true ? "From" : ""} ${widget.item.price} ${ProjectValues.currencySymbol}",
                           fontSize: ProDesign.sp(18),
                           color: ProjectColors.white,
                           fontWeight: FontWeight.w600,
