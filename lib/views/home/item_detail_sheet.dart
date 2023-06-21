@@ -24,7 +24,12 @@ class ItemDetail extends ConsumerWidget {
     CheckoutModel checkoutModel = ref.watch(checkoutModelProvider);
 
     return ProRadiusClip(
-      customBorderRadius: BorderRadius.all(Radius.circular(ProDesign.pt(12))),
+      customBorderRadius: BorderRadius.only(
+        topLeft: Radius.circular(ProDesign.pt(20)),
+        topRight: Radius.circular(ProDesign.pt(20)),
+        bottomLeft: Radius.zero,
+        bottomRight: Radius.zero,
+      ),
       child: Column(
         children: [
           Expanded(

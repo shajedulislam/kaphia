@@ -148,7 +148,7 @@ class _CheckoutBottomOrderState extends ConsumerState<CheckoutBottomOrder> {
                         hintColor: ProjectColors.secondary300,
                         hintFontSize: ProDesign.sp(16),
                         hintFontWeight: FontWeight.w400,
-                        errorFontSize: ProDesign.sp(16),
+                        errorFontSize: ProDesign.sp(14),
                         errorFontWeight: FontWeight.w400,
                         errorFontColor: ProjectColors.red500,
                         backgroundColor: ProjectColors.white,

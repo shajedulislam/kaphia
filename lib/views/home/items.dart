@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaphia/models/menu_items.dart';
 import 'package:kaphia/views/home/item_detail_sheet.dart';
 import 'package:kaphia/views/home/item_detail_size_variation.dart';
-import 'package:kaphia/views/shared/widgets/pro_bottom_sheet.dart';
 import 'package:pro_design/pro_design.dart';
 import 'package:pro_widgets/pro_widgets.dart';
 
@@ -41,13 +40,13 @@ class MenuItems extends ConsumerWidget {
                           child: ProTapper(
                             padding: const EdgeInsets.all(0),
                             onTap: () {
-                              proBottomSheetLocal(
+                              proBottomSheet(
                                   context: context,
                                   customAppBar: const SizedBox.shrink(),
                                   isScrollControlled: true,
                                   sheetHeight: ProDesign.vertically(100),
                                   sheetMargin: EdgeInsets.only(
-                                    top: ProDesign.vertically(8),
+                                    top: ProDesign.vertically(9),
                                   ),
                                   sheetBackgroundColor: ProjectColors.white,
                                   onAppBarCloseIconTap: () {

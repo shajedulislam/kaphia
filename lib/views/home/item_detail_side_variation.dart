@@ -40,7 +40,12 @@ class _ItemDetailSideVariationState
     selectedSides = ref.watch(_selectedSidesProvider) ?? [];
     selectedQuantity = ref.watch(_selectedQuantityProvider) ?? 0;
     return ProRadiusClip(
-      customBorderRadius: BorderRadius.all(Radius.circular(ProDesign.pt(12))),
+      customBorderRadius: BorderRadius.only(
+        topLeft: Radius.circular(ProDesign.pt(20)),
+        topRight: Radius.circular(ProDesign.pt(20)),
+        bottomLeft: Radius.zero,
+        bottomRight: Radius.zero,
+      ),
       child: Column(
         children: [
           Expanded(
