@@ -12,6 +12,7 @@ import '../../utilities/colors.dart';
 import '../../utilities/constants/strings.dart';
 import '../../utilities/constants/values.dart';
 import '../../utilities/functions/navigation.dart';
+import '../shared/widgets/gap.dart';
 import '../shared/widgets/loading_indicator.dart';
 import '../shared/widgets/radius_clip.dart';
 import 'item_detail_side_variation.dart';
@@ -30,125 +31,165 @@ class MenuItems extends ConsumerWidget {
 
           return menuItemsModel.availability == true
               ? menuItemsModel.items != null && menuItemsModel.items!.isNotEmpty
-                  ? ListView.builder(
-                      padding: EdgeInsets.all(ProDesign.pt(20)),
-                      itemCount: menuItemsModel.items?.length,
-                      itemBuilder: (context, index) {
-                        Items? item = menuItemsModel.items![index];
-                        return Padding(
-                          padding: EdgeInsets.only(bottom: ProDesign.pt(20)),
-                          child: ProTapper(
-                            padding: const EdgeInsets.all(0),
-                            onTap: () {
-                              proBottomSheet(
-                                  context: context,
-                                  customAppBar: const SizedBox.shrink(),
-                                  isScrollControlled: true,
-                                  sheetHeight: ProDesign.vertically(100),
-                                  sheetMargin: EdgeInsets.only(
-                                    top: ProDesign.vertically(8),
-                                  ),
-                                  sheetBackgroundColor: ProjectColors.white,
-                                  onAppBarCloseIconTap: () {
-                                    pop();
-                                  },
-                                  customBorderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(ProDesign.pt(20)),
-                                    topRight: Radius.circular(ProDesign.pt(20)),
-                                    bottomLeft: Radius.zero,
-                                    bottomRight: Radius.zero,
-                                  ),
-                                  sheetBody: item.variationType == "size"
-                                      ? ItemDetailSizeVariation(item: item)
-                                      : item.variationType == "side"
-                                          ? ItemDetailSideVariation(
-                                              item: item,
-                                            )
-                                          : ItemDetail(item: item));
-                            },
-                            child: ProCard(
-                              backgroundColor: ProjectColors.grey200,
-                              disableShadow: true,
-                              width: double.infinity,
-                              height: ProDesign.pt(160),
-                              padding: EdgeInsets.all(ProDesign.pt(20)),
-                              borderRadius: ProDesign.pt(8),
-                              child: Row(
-                                children: [
-                                  ProCard(
-                                    backgroundColor: ProjectColors.grey300,
-                                    width: ProDesign.pt(120),
-                                    height: ProDesign.pt(120),
-                                    borderRadius: ProDesign.pt(8),
-                                    padding: const EdgeInsets.all(0),
-                                    borderColor: ProjectColors.grey300,
-                                    borderWidth: ProDesign.pt(1),
-                                    child: ProRadiusClip(
-                                      borderRadius: ProDesign.pt(8),
-                                      child: CachedNetworkImage(
-                                        height: ProDesign.pt(150),
-                                        width: ProDesign.pt(150),
-                                        fit: BoxFit.cover,
-                                        imageUrl: item.image ?? "",
-                                        placeholder: (context, url) =>
-                                            const NormalLoader(),
-                                        errorWidget: (context, url, error) =>
-                                            Icon(
-                                          Icons.fastfood,
-                                          size: ProDesign.pt(50),
-                                          color: ProjectColors.secondary400,
+                  ? Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: ProDesign.pt(20),
+                            bottom: ProDesign.pt(0),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ProText(
+                                text: "${menuItemsModel.name} Items",
+                                fontSize: ProDesign.sp(24),
+                                color: ProjectColors.secondary500,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              const Gap(y: 15),
+                              ProDivider(
+                                width: double.infinity,
+                                color: ProjectColors.secondary200,
+                                height: ProDesign.pt(1),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            padding: EdgeInsets.all(ProDesign.pt(20)),
+                            itemCount: menuItemsModel.items?.length,
+                            itemBuilder: (context, index) {
+                              Items? item = menuItemsModel.items![index];
+                              return Padding(
+                                padding:
+                                    EdgeInsets.only(bottom: ProDesign.pt(20)),
+                                child: ProTapper(
+                                  padding: const EdgeInsets.all(0),
+                                  onTap: () {
+                                    proBottomSheet(
+                                        context: context,
+                                        customAppBar: const SizedBox.shrink(),
+                                        isScrollControlled: true,
+                                        sheetHeight: ProDesign.vertically(100),
+                                        sheetMargin: EdgeInsets.only(
+                                          top: ProDesign.vertically(8),
                                         ),
-                                      ),
+                                        sheetBackgroundColor:
+                                            ProjectColors.white,
+                                        onAppBarCloseIconTap: () {
+                                          pop();
+                                        },
+                                        customBorderRadius: BorderRadius.only(
+                                          topLeft:
+                                              Radius.circular(ProDesign.pt(20)),
+                                          topRight:
+                                              Radius.circular(ProDesign.pt(20)),
+                                          bottomLeft: Radius.zero,
+                                          bottomRight: Radius.zero,
+                                        ),
+                                        sheetBody: item.variationType == "size"
+                                            ? ItemDetailSizeVariation(
+                                                item: item)
+                                            : item.variationType == "side"
+                                                ? ItemDetailSideVariation(
+                                                    item: item,
+                                                  )
+                                                : ItemDetail(item: item));
+                                  },
+                                  child: ProCard(
+                                    backgroundColor: ProjectColors.grey200,
+                                    disableShadow: true,
+                                    width: double.infinity,
+                                    height: ProDesign.pt(160),
+                                    padding: EdgeInsets.all(ProDesign.pt(20)),
+                                    borderRadius: ProDesign.pt(8),
+                                    child: Row(
+                                      children: [
+                                        ProCard(
+                                          backgroundColor:
+                                              ProjectColors.grey300,
+                                          width: ProDesign.pt(120),
+                                          height: ProDesign.pt(120),
+                                          borderRadius: ProDesign.pt(8),
+                                          padding: const EdgeInsets.all(0),
+                                          borderColor: ProjectColors.grey300,
+                                          borderWidth: ProDesign.pt(1),
+                                          child: ProRadiusClip(
+                                            borderRadius: ProDesign.pt(8),
+                                            child: CachedNetworkImage(
+                                              height: ProDesign.pt(150),
+                                              width: ProDesign.pt(150),
+                                              fit: BoxFit.cover,
+                                              imageUrl: item.image ?? "",
+                                              placeholder: (context, url) =>
+                                                  const NormalLoader(),
+                                              errorWidget:
+                                                  (context, url, error) => Icon(
+                                                Icons.fastfood,
+                                                size: ProDesign.pt(50),
+                                                color:
+                                                    ProjectColors.secondary400,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        ProGap(x: ProDesign.pt(20)),
+                                        Expanded(
+                                            child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            ProText(
+                                              text:
+                                                  "${ProjectValues.currencySymbol} ${item.price}",
+                                              fontSize: ProDesign.sp(20),
+                                              color: ProjectColors.green500,
+                                              fontWeight: FontWeight.w600,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                ProText(
+                                                  text: item.name,
+                                                  fontSize: ProDesign.sp(20),
+                                                  color: ProjectColors
+                                                      .secondary500,
+                                                  fontWeight: FontWeight.w600,
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                                ProGap(y: ProDesign.pt(8)),
+                                                ProText(
+                                                  text: item.description,
+                                                  fontSize: ProDesign.sp(18),
+                                                  color: ProjectColors
+                                                      .secondary400,
+                                                  fontWeight: FontWeight.w500,
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ))
+                                      ],
                                     ),
                                   ),
-                                  ProGap(x: ProDesign.pt(20)),
-                                  Expanded(
-                                      child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      ProText(
-                                        text:
-                                            "${ProjectValues.currencySymbol} ${item.price}",
-                                        fontSize: ProDesign.sp(20),
-                                        color: ProjectColors.green500,
-                                        fontWeight: FontWeight.w600,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          ProText(
-                                            text: item.name,
-                                            fontSize: ProDesign.sp(20),
-                                            color: ProjectColors.secondary500,
-                                            fontWeight: FontWeight.w600,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          ProGap(y: ProDesign.pt(8)),
-                                          ProText(
-                                            text: item.description,
-                                            fontSize: ProDesign.sp(18),
-                                            color: ProjectColors.secondary400,
-                                            fontWeight: FontWeight.w500,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ))
-                                ],
-                              ),
-                            ),
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
+                        )
+                      ],
                     )
                   : Center(
                       child: ProText(

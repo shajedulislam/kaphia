@@ -22,9 +22,7 @@ class HomeBottomCart extends ConsumerWidget {
 
         if (orderItems.isNotEmpty) {
           return ProCard(
-            borderColor: ProjectColors.primary100,
-            borderWidth: ProDesign.pt(1),
-            backgroundColor: ProjectColors.grey200,
+            backgroundColor: ProjectColors.secondary500,
             borderRadius: 0,
             disableShadow: true,
             padding: EdgeInsets.symmetric(
@@ -37,14 +35,16 @@ class HomeBottomCart extends ConsumerWidget {
                         "${orderItems.length} ${orderItems.length > 1 ? "items" : "item"} added in food cart",
                     fontSize: ProDesign.sp(20),
                     fontWeight: FontWeight.w600,
-                    color: ProjectColors.secondary500,
+                    color: ProjectColors.white,
                   ),
                 ),
                 ProButtonBasic(
                   width: ProDesign.horizontally(30),
-                  height: ProDesign.pt(50),
+                  height: ProDesign.pt(40),
                   borderRadius: ProDesign.pt(8),
                   fontSize: ProDesign.sp(16),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: ProDesign.pt(8), vertical: ProDesign.pt(4)),
                   fontColor: ProjectColors.white,
                   backgroundColor: ProjectColors.red500,
                   customChild: Row(
@@ -52,9 +52,9 @@ class HomeBottomCart extends ConsumerWidget {
                     children: [
                       ProText(
                         text: "View Cart",
-                        fontSize: ProDesign.sp(20),
+                        fontSize: ProDesign.sp(18),
                         color: ProjectColors.white,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                       ),
                       const Gap(x: 16),
                       Icon(

@@ -79,50 +79,126 @@ class ItemDetail extends ConsumerWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.all(ProDesign.pt(20)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: ProText(
-                                  text: item.name,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: ProText(
+                                    text: item.name,
+                                    fontSize: ProDesign.sp(18),
+                                    color: ProjectColors.secondary500,
+                                    fontWeight: FontWeight.w600,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                const Gap(x: 20),
+                                ProText(
+                                  text:
+                                      "${ProjectValues.currencySymbol} ${item.price}",
                                   fontSize: ProDesign.sp(18),
                                   color: ProjectColors.secondary500,
                                   fontWeight: FontWeight.w600,
-                                  maxLines: 2,
+                                  maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
-                              ),
-                              const Gap(x: 20),
-                              ProText(
-                                text:
-                                    "${ProjectValues.currencySymbol} ${item.price}",
-                                fontSize: ProDesign.sp(18),
-                                color: ProjectColors.secondary500,
-                                fontWeight: FontWeight.w600,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                          ProGap(y: ProDesign.pt(10)),
-                          ProText(
-                            text: item.description,
-                            fontSize: ProDesign.sp(14),
-                            color: ProjectColors.secondary400,
-                            fontWeight: FontWeight.w500,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
+                              ],
+                            ),
+                            ProGap(y: ProDesign.pt(20)),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: ProText(
+                                    text: item.description,
+                                    fontSize: ProDesign.sp(14),
+                                    color: ProjectColors.secondary400,
+                                    fontWeight: FontWeight.w500,
+                                    maxLines: 5,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ProButtonBasic(
+                                      height: ProDesign.pt(40),
+                                      width: ProDesign.pt(40),
+                                      borderRadius: ProDesign.pt(6),
+                                      customChild: Icon(
+                                        Icons.remove,
+                                        size: ProDesign.pt(24),
+                                        color: ProjectColors.red500,
+                                      ),
+                                      backgroundColor: ProjectColors.red500
+                                          .withOpacity(0.15),
+                                      onTap: () {
+                                        removeCheckoutModelNormal(
+                                          ref: ref,
+                                          price: item.price,
+                                          removeID: item.id,
+                                        );
+                                      },
+                                    ),
+                                    const Gap(x: 10),
+                                    ProCard(
+                                      height: ProDesign.pt(40),
+                                      width: ProDesign.pt(40),
+                                      borderRadius: ProDesign.pt(6),
+                                      padding: const EdgeInsets.all(0),
+                                      disableShadow: true,
+                                      backgroundColor: ProjectColors.grey200,
+                                      child: Center(
+                                        child: ProText(
+                                          text:
+                                              "${checkoutModel.orderItems != null && checkoutModel.orderItems!.isNotEmpty ? checkoutModel.orderItems!.firstWhere(
+                                                    (element) =>
+                                                        element.id == item.id,
+                                                    orElse: () =>
+                                                        CheckoutOrderItems(),
+                                                  ).quantity ?? 0 : 0}",
+                                          fontSize: ProDesign.sp(20),
+                                          color: ProjectColors.secondary400,
+                                          fontWeight: FontWeight.w500,
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                    ),
+                                    const Gap(x: 10),
+                                    ProButtonBasic(
+                                      height: ProDesign.pt(40),
+                                      width: ProDesign.pt(40),
+                                      borderRadius: ProDesign.pt(6),
+                                      customChild: Icon(
+                                        Icons.add,
+                                        size: ProDesign.pt(24),
+                                        color: ProjectColors.green500,
+                                      ),
+                                      backgroundColor: ProjectColors.green500
+                                          .withOpacity(0.15),
+                                      onTap: () {
+                                        addCheckoutModelNormal(
+                                            ref: ref, item: item);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
+                      const Gap(x: 20),
                     ],
                   ),
                 ),
@@ -130,66 +206,11 @@ class ItemDetail extends ConsumerWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(ProDesign.pt(20)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ProButtonBasic(
-                  height: ProDesign.pt(50),
-                  width: ProDesign.pt(50),
-                  borderRadius: ProDesign.pt(6),
-                  customChild: Icon(
-                    Icons.remove,
-                    size: ProDesign.pt(28),
-                    color: ProjectColors.red500,
-                  ),
-                  backgroundColor: ProjectColors.red500.withOpacity(0.15),
-                  onTap: () {
-                    removeCheckoutModelNormal(
-                      ref: ref,
-                      price: item.price,
-                      removeID: item.id,
-                    );
-                  },
-                ),
-                const Gap(x: 10),
-                ProCard(
-                  height: ProDesign.pt(50),
-                  width: ProDesign.pt(50),
-                  borderRadius: ProDesign.pt(6),
-                  padding: const EdgeInsets.all(0),
-                  disableShadow: true,
-                  backgroundColor: ProjectColors.grey200,
-                  child: Center(
-                    child: ProText(
-                      text:
-                          "${checkoutModel.orderItems != null && checkoutModel.orderItems!.isNotEmpty ? checkoutModel.orderItems!.firstWhere(
-                                (element) => element.id == item.id,
-                                orElse: () => CheckoutOrderItems(),
-                              ).quantity ?? 0 : 0}",
-                      fontSize: ProDesign.sp(20),
-                      color: ProjectColors.secondary400,
-                      fontWeight: FontWeight.w500,
-                      maxLines: 1,
-                    ),
-                  ),
-                ),
-                const Gap(x: 10),
-                ProButtonBasic(
-                  height: ProDesign.pt(50),
-                  width: ProDesign.pt(50),
-                  borderRadius: ProDesign.pt(6),
-                  customChild: Icon(
-                    Icons.add,
-                    size: ProDesign.pt(28),
-                    color: ProjectColors.green500,
-                  ),
-                  backgroundColor: ProjectColors.green500.withOpacity(0.15),
-                  onTap: () {
-                    addCheckoutModelNormal(ref: ref, item: item);
-                  },
-                ),
-              ],
+            padding: EdgeInsets.only(
+              left: ProDesign.pt(20),
+              right: ProDesign.pt(20),
+              bottom: ProDesign.pt(60),
+              top: ProDesign.pt(20),
             ),
           )
         ],

@@ -12,6 +12,7 @@ import 'package:pro_widgets/pro_widgets.dart';
 
 import '../../utilities/colors.dart';
 import '../../utilities/constants/strings.dart';
+import '../shared/widgets/gap.dart';
 import '../shared/widgets/radius_clip.dart';
 
 class Menu extends ConsumerWidget {
@@ -37,9 +38,11 @@ class Menu extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: ProDesign.pt(30),
-                      horizontal: ProDesign.pt(20),
+                    padding: EdgeInsets.only(
+                      top: ProDesign.pt(40),
+                      bottom: ProDesign.pt(20),
+                      left: ProDesign.pt(20),
+                      right: ProDesign.pt(20),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,9 +63,33 @@ class Menu extends ConsumerWidget {
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: ProDesign.pt(20),
+                      bottom: ProDesign.pt(20),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ProText(
+                          text: "Categories",
+                          fontSize: ProDesign.sp(24),
+                          color: ProjectColors.secondary500,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        const Gap(y: 15),
+                        ProDivider(
+                          width: double.infinity,
+                          color: ProjectColors.secondary200,
+                          height: ProDesign.pt(1),
+                        ),
+                      ],
+                    ),
+                  ),
                   SizedBox(
                     height: ProDesign.pt(220),
                     child: ListView(
+                      clipBehavior: Clip.none,
                       padding: EdgeInsets.only(
                         left: ProDesign.pt(20),
                       ),
@@ -87,6 +114,13 @@ class Menu extends ConsumerWidget {
                                   padding:
                                       EdgeInsets.only(bottom: ProDesign.pt(16)),
                                   child: ProCard(
+                                    shadowBlurRadius: 20,
+                                    shadowSpreadRadius: 6,
+                                    shadowColor:
+                                        ref.watch(selectedMenuProvider) ==
+                                                document.id
+                                            ? Colors.black.withOpacity(0.45)
+                                            : Colors.transparent,
                                     backgroundColor: ProjectColors.grey300,
                                     width: ProDesign.pt(150),
                                     height: ProDesign.pt(150),
@@ -118,8 +152,15 @@ class Menu extends ConsumerWidget {
                                   child: ProText(
                                     text: data['name'] ?? "NA",
                                     fontSize: ProDesign.sp(18),
-                                    color: ProjectColors.secondary500,
-                                    fontWeight: FontWeight.w600,
+                                    color: ref.watch(selectedMenuProvider) ==
+                                            document.id
+                                        ? ProjectColors.primary
+                                        : ProjectColors.secondary500,
+                                    fontWeight:
+                                        ref.watch(selectedMenuProvider) ==
+                                                document.id
+                                            ? FontWeight.w700
+                                            : FontWeight.w600,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     alignment: TextAlign.center,
