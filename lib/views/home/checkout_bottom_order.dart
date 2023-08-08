@@ -1,23 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kaphia/models/price_breakdown.dart';
 import 'package:kaphia/providers/checkout_model_provider.dart';
 import 'package:kaphia/providers/login_button_loader.dart';
-import 'package:kaphia/utilities/constants/values.dart';
 import 'package:kaphia/utilities/functions/formatter.dart';
 import 'package:kaphia/utilities/functions/navigation.dart';
+import 'package:kaphia/views/home/checkout_price_breakdown.dart';
 import 'package:kaphia/views/shared/widgets/gap.dart';
 import 'package:kaphia/views/shared/widgets/snackbar.dart';
 import 'package:pro_design/pro_design.dart';
 import 'package:pro_widgets/pro_widgets.dart';
 
+import '../../models/charges_model.dart';
 import '../../models/checkout.dart';
 import '../../utilities/colors.dart';
 import '../../utilities/functions/null_checker.dart';
 import '../shared/widgets/loading_indicator.dart';
 
 class CheckoutBottomOrder extends ConsumerStatefulWidget {
-  const CheckoutBottomOrder({super.key});
+  final ChargesModel chargesModel;
+  const CheckoutBottomOrder({super.key, required this.chargesModel});
 
   @override
   ConsumerState<CheckoutBottomOrder> createState() =>
@@ -31,21 +34,37 @@ class _CheckoutBottomOrderState extends ConsumerState<CheckoutBottomOrder> {
 
   placeOrder() {
     CheckoutModel checkoutModel = ref.read(checkoutModelProvider);
-    int totalMoney = 0;
+    int subTotal = 0;
+    int vat = 0;
+    int service = 0;
+    int total = 0;
     checkoutModel.orderItems?.forEach((element) {
       if (element.price != null &&
           element.price! > 0 &&
           element.quantity != null &&
           element.quantity! > 0) {
-        totalMoney = totalMoney + (element.price! * element.quantity!);
+        subTotal = subTotal + (element.price! * element.quantity!);
       }
     });
+
+    if (widget.chargesModel.vat != null && widget.chargesModel.vat! > 0) {
+      vat = (subTotal * (widget.chargesModel.vat! / 100)).ceil();
+    }
+
+    if (widget.chargesModel.serviceCharge != null &&
+        widget.chargesModel.serviceCharge! > 0) {
+      service = (subTotal * (widget.chargesModel.serviceCharge! / 100)).ceil();
+    }
+
+    total = subTotal + vat + service;
 
     String orderDate = ProFormatter()
         .dateTimeFormatter(format: "dd-MM-yyyy", dateTime: DateTime.now());
     checkoutModel.orderId = "o${DateTime.now().millisecondsSinceEpoch}";
     checkoutModel.orderDate = orderDate;
-    checkoutModel.orderBill = totalMoney;
+    checkoutModel.vat = vat;
+    checkoutModel.serviceCharge = service;
+    checkoutModel.orderBill = total;
     checkoutModel.orderTime = ProFormatter()
         .dateTimeFormatter(format: "hh:mm aa", dateTime: DateTime.now());
 
@@ -103,17 +122,36 @@ class _CheckoutBottomOrderState extends ConsumerState<CheckoutBottomOrder> {
     });
   }
 
-  int totalMoneyCounter(List<CheckoutOrderItems> orderItemsTemp) {
-    int totalMoney = 0;
+  PriceBreakdownModel breakdownCal(List<CheckoutOrderItems> orderItemsTemp) {
+    int subTotal = 0;
+    int vat = 0;
+    int service = 0;
+    int total = 0;
     for (var element in orderItemsTemp) {
       if (element.price != null &&
           element.price! > 0 &&
           element.quantity != null &&
           element.quantity! > 0) {
-        totalMoney = totalMoney + (element.price! * element.quantity!);
+        subTotal = subTotal + (element.price! * element.quantity!);
       }
     }
-    return totalMoney;
+    if (widget.chargesModel.vat != null && widget.chargesModel.vat! > 0) {
+      vat = (subTotal * (widget.chargesModel.vat! / 100)).ceil();
+    }
+
+    if (widget.chargesModel.serviceCharge != null &&
+        widget.chargesModel.serviceCharge! > 0) {
+      service = (subTotal * (widget.chargesModel.serviceCharge! / 100)).ceil();
+    }
+
+    total = subTotal + vat + service;
+
+    return PriceBreakdownModel(
+      subtotal: subTotal,
+      vat: vat,
+      serviceCharge: service,
+      total: total,
+    );
   }
 
   @override
@@ -214,14 +252,9 @@ class _CheckoutBottomOrderState extends ConsumerState<CheckoutBottomOrder> {
                 Row(
                   children: [
                     Expanded(
-                      child: ProText(
-                        text:
-                            "Total: ${totalMoneyCounter(orderItems)} ${ProjectValues.currencySymbol}",
-                        fontSize: ProDesign.sp(24),
-                        fontWeight: FontWeight.w600,
-                        color: ProjectColors.green500,
-                      ),
-                    ),
+                        child: CheckoutPriceBreakdown(
+                      breakdownModel: breakdownCal(orderItems),
+                    )),
                     ProButtonBasic(
                       width: ProDesign.horizontally(30),
                       height: ProDesign.pt(50),

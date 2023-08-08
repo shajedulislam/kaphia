@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kaphia/providers/checkout_model_provider.dart';
 import 'package:kaphia/utilities/functions/navigation.dart';
-import 'package:kaphia/views/home/checkout_screen.dart';
+import 'package:kaphia/views/home/loaders/charges_loader.dart';
 import 'package:kaphia/views/shared/widgets/gap.dart';
 import 'package:pro_design/pro_design.dart';
 import 'package:pro_widgets/pro_widgets.dart';
@@ -64,7 +64,7 @@ class HomeBottomCart extends ConsumerWidget {
                     ],
                   ),
                   onTap: () {
-                    push(screen: const CHeckoutScreen());
+                    loader(screen: const ChargesLoader());
                   },
                 ),
               ],

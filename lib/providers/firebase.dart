@@ -25,3 +25,16 @@ final menuItemsStreamProvider = StreamProvider.autoDispose<DocumentSnapshot?>(
     }
   },
 );
+
+final chargesStreamProvider = StreamProvider<DocumentSnapshot?>(
+  (ref) {
+    if (FirebaseAuth.instance.currentUser != null) {
+      return FirebaseFirestore.instance
+          .collection('important')
+          .doc("charges")
+          .snapshots();
+    } else {
+      return const Stream.empty();
+    }
+  },
+);

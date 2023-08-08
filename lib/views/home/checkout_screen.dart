@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kaphia/models/charges_model.dart';
 import 'package:kaphia/models/checkout.dart';
 import 'package:kaphia/providers/checkout_model_provider.dart';
 import 'package:kaphia/utilities/colors.dart';
@@ -13,7 +14,8 @@ import 'package:pro_widgets/pro_widgets.dart';
 import '../../utilities/functions/update_checkout_model.dart';
 
 class CHeckoutScreen extends ConsumerWidget {
-  const CHeckoutScreen({super.key});
+  final ChargesModel chargesModel;
+  const CHeckoutScreen({super.key, required this.chargesModel});
 
   @override
   Widget build(BuildContext context, ref) {
@@ -273,7 +275,7 @@ class CHeckoutScreen extends ConsumerWidget {
                       },
                     ),
                   ),
-                  const CheckoutBottomOrder(),
+                  CheckoutBottomOrder(chargesModel: chargesModel),
                 ],
               )
             : const SizedBox.shrink(),

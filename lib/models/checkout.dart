@@ -5,6 +5,8 @@ class CheckoutModel {
   String? orderDate;
   String? orderTime;
   int? orderBill;
+  int? vat;
+  int? serviceCharge;
   String? tableNumber;
   String? specialInstruction;
   List<CheckoutOrderItems>? orderItems;
@@ -16,6 +18,8 @@ class CheckoutModel {
     this.orderDate,
     this.orderTime,
     this.orderBill,
+    this.vat,
+    this.serviceCharge,
     this.tableNumber,
     this.specialInstruction,
     this.orderItems,
@@ -28,6 +32,8 @@ class CheckoutModel {
     String? orderDate,
     String? orderTime,
     int? orderBill,
+    int? vat,
+    int? serviceCharge,
     String? tableNumber,
     String? specialInstruction,
     List<CheckoutOrderItems>? orderItems,
@@ -39,6 +45,8 @@ class CheckoutModel {
       orderDate: orderDate ?? this.orderDate,
       orderTime: orderTime ?? this.orderTime,
       orderBill: orderBill ?? this.orderBill,
+      vat: vat ?? this.vat,
+      serviceCharge: serviceCharge ?? this.serviceCharge,
       tableNumber: tableNumber ?? this.tableNumber,
       specialInstruction: specialInstruction ?? this.specialInstruction,
       orderItems: orderItems ?? this.orderItems,
@@ -70,6 +78,8 @@ class CheckoutModel {
     data['orderDate'] = orderDate;
     data['orderTime'] = orderTime;
     data['orderBill'] = orderBill;
+    data['vat'] = vat;
+    data['serviceCharge'] = serviceCharge;
     data['tableNumber'] = tableNumber;
     data['specialInstruction'] = specialInstruction;
     if (orderItems != null) {
