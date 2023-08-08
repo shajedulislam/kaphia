@@ -37,34 +37,35 @@ class Menu extends ConsumerWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Padding(
+                  //   padding: EdgeInsets.only(
+                  //     top: ProDesign.pt(40),
+                  //     bottom: ProDesign.pt(20),
+                  //     left: ProDesign.pt(20),
+                  //     right: ProDesign.pt(20),
+                  //   ),
+                  //   child: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       ProText(
+                  //         text: "Hello!",
+                  //         fontSize: ProDesign.sp(28),
+                  //         color: ProjectColors.secondary500,
+                  //         fontWeight: FontWeight.w600,
+                  //       ),
+                  //       ProGap(y: ProDesign.pt(8)),
+                  //       ProText(
+                  //         text: "What would you like to order?",
+                  //         fontSize: ProDesign.sp(18),
+                  //         color: ProjectColors.secondary500,
+                  //         fontWeight: FontWeight.w600,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Padding(
                     padding: EdgeInsets.only(
-                      top: ProDesign.pt(40),
-                      bottom: ProDesign.pt(20),
-                      left: ProDesign.pt(20),
-                      right: ProDesign.pt(20),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ProText(
-                          text: "Hello!",
-                          fontSize: ProDesign.sp(28),
-                          color: ProjectColors.secondary500,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        ProGap(y: ProDesign.pt(8)),
-                        ProText(
-                          text: "What would you like to order?",
-                          fontSize: ProDesign.sp(18),
-                          color: ProjectColors.secondary500,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
+                      top: ProDesign.pt(60),
                       left: ProDesign.pt(20),
                       bottom: ProDesign.pt(20),
                     ),
@@ -87,7 +88,7 @@ class Menu extends ConsumerWidget {
                     ),
                   ),
                   SizedBox(
-                    height: ProDesign.pt(220),
+                    height: ProDesign.pt(170),
                     child: ListView(
                       clipBehavior: Clip.none,
                       padding: EdgeInsets.only(
@@ -111,28 +112,29 @@ class Menu extends ConsumerWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding:
-                                      EdgeInsets.only(bottom: ProDesign.pt(16)),
+                                  padding: EdgeInsets.only(
+                                    bottom: ProDesign.pt(16),
+                                  ),
                                   child: ProCard(
-                                    shadowBlurRadius: 20,
-                                    shadowSpreadRadius: 6,
+                                    shadowBlurRadius: 10,
+                                    shadowSpreadRadius: 5,
                                     shadowColor:
                                         ref.watch(selectedMenuProvider) ==
                                                 document.id
                                             ? Colors.black.withOpacity(0.45)
                                             : Colors.transparent,
                                     backgroundColor: ProjectColors.grey300,
-                                    width: ProDesign.pt(150),
-                                    height: ProDesign.pt(150),
+                                    width: ProDesign.pt(100),
+                                    height: ProDesign.pt(100),
                                     borderRadius: ProDesign.pt(8),
                                     padding: const EdgeInsets.all(0),
-                                    borderColor: ProjectColors.grey300,
+                                    borderColor: ProjectColors.white,
                                     borderWidth: ProDesign.pt(1),
                                     child: ProRadiusClip(
                                       borderRadius: ProDesign.pt(8),
                                       child: CachedNetworkImage(
-                                        height: ProDesign.pt(150),
-                                        width: ProDesign.pt(150),
+                                        height: ProDesign.pt(100),
+                                        width: ProDesign.pt(100),
                                         fit: BoxFit.cover,
                                         imageUrl: data['image'] ?? "",
                                         placeholder: (context, url) =>
@@ -148,10 +150,10 @@ class Menu extends ConsumerWidget {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: ProDesign.pt(150),
+                                  width: ProDesign.pt(100),
                                   child: ProText(
-                                    text: data['name'] ?? "NA",
-                                    fontSize: ProDesign.sp(18),
+                                    text: data['name'] ?? "",
+                                    fontSize: ProDesign.sp(16),
                                     color: ref.watch(selectedMenuProvider) ==
                                             document.id
                                         ? ProjectColors.primary

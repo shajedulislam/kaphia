@@ -102,7 +102,7 @@ class MenuItems extends ConsumerWidget {
                                     backgroundColor: ProjectColors.grey200,
                                     disableShadow: true,
                                     width: double.infinity,
-                                    height: ProDesign.pt(160),
+                                    height: ProDesign.pt(140),
                                     padding: EdgeInsets.all(ProDesign.pt(20)),
                                     borderRadius: ProDesign.pt(8),
                                     child: Row(
@@ -110,8 +110,8 @@ class MenuItems extends ConsumerWidget {
                                         ProCard(
                                           backgroundColor:
                                               ProjectColors.grey300,
-                                          width: ProDesign.pt(120),
-                                          height: ProDesign.pt(120),
+                                          width: ProDesign.pt(100),
+                                          height: ProDesign.pt(100),
                                           borderRadius: ProDesign.pt(8),
                                           padding: const EdgeInsets.all(0),
                                           borderColor: ProjectColors.grey300,
@@ -146,7 +146,7 @@ class MenuItems extends ConsumerWidget {
                                             ProText(
                                               text:
                                                   "${ProjectValues.currencySymbol} ${item.price}",
-                                              fontSize: ProDesign.sp(20),
+                                              fontSize: ProDesign.sp(18),
                                               color: ProjectColors.green500,
                                               fontWeight: FontWeight.w600,
                                               maxLines: 1,
@@ -158,7 +158,7 @@ class MenuItems extends ConsumerWidget {
                                               children: [
                                                 ProText(
                                                   text: item.name,
-                                                  fontSize: ProDesign.sp(20),
+                                                  fontSize: ProDesign.sp(18),
                                                   color: ProjectColors
                                                       .secondary500,
                                                   fontWeight: FontWeight.w600,
@@ -169,7 +169,7 @@ class MenuItems extends ConsumerWidget {
                                                 ProGap(y: ProDesign.pt(8)),
                                                 ProText(
                                                   text: item.description,
-                                                  fontSize: ProDesign.sp(18),
+                                                  fontSize: ProDesign.sp(16),
                                                   color: ProjectColors
                                                       .secondary400,
                                                   fontWeight: FontWeight.w500,
