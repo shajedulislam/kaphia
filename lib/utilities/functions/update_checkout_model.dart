@@ -263,3 +263,76 @@ removeCheckoutModelNormal({
     );
   }
 }
+
+removeFromCart({
+  required WidgetRef ref,
+  String? removeID,
+}) {
+  try {
+    List<CheckoutOrderItems>? orderItems =
+        ref.read(checkoutModelProvider).orderItems;
+
+    if (orderItems != null && orderItems.isNotEmpty) {
+      CheckoutOrderItems? checkedItem;
+      int index = -1;
+      for (var element in orderItems) {
+        index++;
+        if (element.id == removeID) {
+          checkedItem = element;
+          break;
+        }
+      }
+      if (checkedItem != null && checkedItem.quantity != null) {
+        if (checkedItem.quantity! > 1) {
+          checkedItem.quantity = checkedItem.quantity! - 1;
+        } else if (checkedItem.quantity == 1) {
+          orderItems.removeAt(index);
+        }
+        ref.read(checkoutModelProvider.notifier).update(
+              (state) => state.copyWith(orderItems: orderItems),
+            );
+      }
+    }
+  } catch (e) {
+    showSnackBar(
+      text: ProjectStrings.wentWrong,
+      color: ProjectColors.red500,
+      time: 1,
+    );
+  }
+}
+
+addMoreInCart({
+  required WidgetRef ref,
+  String? id,
+}) {
+  try {
+    List<CheckoutOrderItems>? orderItems =
+        ref.read(checkoutModelProvider).orderItems ?? [];
+
+    if (orderItems.isNotEmpty) {
+      CheckoutOrderItems? checkedItem;
+      int index = -1;
+      for (var element in orderItems) {
+        index++;
+        if (element.id == id) {
+          checkedItem = element;
+          break;
+        }
+      }
+      if (checkedItem != null && checkedItem.quantity != null) {
+        checkedItem.quantity = checkedItem.quantity! + 1;
+        orderItems[index] = checkedItem;
+        ref.read(checkoutModelProvider.notifier).update(
+              (state) => state.copyWith(orderItems: orderItems),
+            );
+      }
+    }
+  } catch (_) {
+    showSnackBar(
+      text: ProjectStrings.wentWrong,
+      color: ProjectColors.red500,
+      time: 1,
+    );
+  }
+}

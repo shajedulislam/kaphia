@@ -126,9 +126,9 @@ class _CheckoutBottomOrderState extends ConsumerState<CheckoutBottomOrder> {
         if (orderItems.isNotEmpty) {
           return ProCard(
             borderRadius: 0,
-            borderColor: ProjectColors.primary100,
-            borderWidth: ProDesign.pt(1),
-            backgroundColor: ProjectColors.grey200,
+            borderColor: ProjectColors.background,
+            borderWidth: ProDesign.pt(1.5),
+            backgroundColor: ProjectColors.white,
             padding: EdgeInsets.all(ProDesign.pt(20)),
             disableShadow: true,
             child: Column(
