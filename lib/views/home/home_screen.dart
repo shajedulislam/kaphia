@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:kaphia/utilities/colors.dart';
+import 'package:kaphia/utilities/functions/gesture.dart';
 import 'package:kaphia/views/home/menu.dart';
 
 import '../shared/widgets/snackbar.dart';
@@ -53,42 +54,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: ProjectColors.white,
-      // appBar: AppBar(
-      //   title: Padding(
-      //     padding: EdgeInsets.only(left: ProDesign.pt(6)),
-      //     child: ProText(
-      //       text: "Kaphia",
-      //       fontSize: ProDesign.sp(20),
-      //       color: ProjectColors.white,
-      //       fontWeight: FontWeight.w600,
-      //     ),
-      //   ),
-      //   backgroundColor: ProjectColors.secondary500,
-      //   actions: [
-      //     ProTapper(
-      //       padding: EdgeInsets.all(ProDesign.pt(16)),
-      //       onTap: () async {
-      //         try {
-      //           await FirebaseAuth.instance.signOut();
-      //           pushAndRemoveAll(screen: const SigninScreen());
-      //         } on FirebaseException catch (exp) {
-      //           showSnackBar(text: exp.message ?? "Something went wrong");
-      //           return false;
-      //         } catch (error) {
-      //           showSnackBar(text: error.toString());
-      //           return false;
-      //         }
-      //       },
-      //       child: Icon(
-      //         Icons.logout,
-      //         size: ProDesign.pt(24),
-      //       ),
-      //     )
-      //   ],
-      // ),
-      body: Menu(),
+    return GestureDetector(
+      onTap: () {
+        unFocus(context);
+      },
+      child: const Scaffold(
+        backgroundColor: ProjectColors.white,
+        body: Menu(),
+      ),
     );
   }
 }
